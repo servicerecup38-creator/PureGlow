@@ -1,222 +1,2862 @@
-<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PureGlow Smile</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-
+<title>NEON VICE — GTA VI Fan Site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
+/* ============================================
+   ROOT & GLOBAL
+============================================ */
+:root {
+  --pink: #ff2d78;
+  --violet: #9b2dff;
+  --cyan: #00f5ff;
+  --orange: #ff6b1a;
+  --gold: #ffd700;
+  --dark: #050508;
+  --dark2: #0a0a12;
+  --dark3: #0f0f1a;
+  --glass: rgba(255,255,255,0.04);
+  --glass-border: rgba(255,255,255,0.08);
+  --glow-pink: 0 0 20px rgba(255,45,120,0.6), 0 0 60px rgba(255,45,120,0.3);
+  --glow-cyan: 0 0 20px rgba(0,245,255,0.6), 0 0 60px rgba(0,245,255,0.3);
+  --glow-violet: 0 0 20px rgba(155,45,255,0.6), 0 0 60px rgba(155,45,255,0.3);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
 body {
-  margin:0;
-  font-family:Poppins;
-  background:#050507;
-  color:white;
+  background: var(--dark);
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
 }
 
-/* INTRO VIDEO */
-#intro {
-  position:fixed;
-  inset:0;
-  z-index:999;
-  transition:opacity 0.6s ease;
+/* ============================================
+   CUSTOM CURSOR
+============================================ */
+#cursor {
+  width: 12px; height: 12px;
+  background: var(--pink);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  transition: transform 0.1s;
+  box-shadow: var(--glow-pink);
+  mix-blend-mode: screen;
+}
+#cursor-trail {
+  width: 40px; height: 40px;
+  border: 1px solid rgba(255,45,120,0.4);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 99998;
+  transition: all 0.15s ease;
 }
 
-#intro video {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:brightness(0.55);
+/* ============================================
+   LOADER
+============================================ */
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99997;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s;
+}
+#loader.hidden { opacity: 0; visibility: hidden; }
+
+.loader-logo {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(60px, 12vw, 140px);
+  letter-spacing: 0.1em;
+  background: linear-gradient(90deg, var(--pink), var(--violet), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: logoGlow 2s ease-in-out infinite alternate;
+  position: relative;
+}
+.loader-logo::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0; top: 0;
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(90deg, var(--pink), var(--violet), var(--cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: blur(20px);
+  opacity: 0.5;
 }
 
-.intro-content {
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  text-align:center;
+.loader-sub {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: rgba(255,255,255,0.3);
+  margin-top: 8px;
+  text-transform: uppercase;
 }
 
-.intro-brand img {
-  width:200px;
-  display:block;
-  margin:auto;
-  animation:glow 2s ease-in-out infinite alternate;
+.loader-bar-wrap {
+  width: 300px;
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  margin-top: 40px;
+  overflow: hidden;
+  position: relative;
+}
+.loader-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink), var(--violet), var(--cyan));
+  border-radius: 2px;
+  animation: loadFill 2.5s ease-out forwards;
+  box-shadow: 0 0 15px var(--pink);
+}
+.loader-pct {
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  color: var(--pink);
+  margin-top: 12px;
+  letter-spacing: 0.2em;
 }
 
-@keyframes glow {
-  from { filter: drop-shadow(0 0 10px #a855f7); }
-  to { filter: drop-shadow(0 0 25px #c084fc); }
+@keyframes loadFill { from { width: 0 } to { width: 100% } }
+@keyframes logoGlow {
+  from { filter: drop-shadow(0 0 10px rgba(255,45,120,0.5)); }
+  to { filter: drop-shadow(0 0 30px rgba(0,245,255,0.8)); }
 }
 
-.enter-btn {
-  margin-top:30px;
-  padding:14px 36px;
-  border:1px solid #a855f7;
-  background:transparent;
-  color:white;
-  font-weight:600;
-  letter-spacing:2px;
-  cursor:pointer;
-  transition:0.3s;
+/* ============================================
+   PARTICLES CANVAS
+============================================ */
+#particles-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
 }
 
-.enter-btn:hover {
-  background:#a855f7;
-  box-shadow:0 0 20px #a855f7;
+/* ============================================
+   RAIN CANVAS
+============================================ */
+#rain-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.15;
 }
 
-/* MAIN */
-#main {
-  display:none;
-  animation:fadeIn 1s ease;
+/* ============================================
+   SCANLINES OVERLAY
+============================================ */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
 }
 
+/* ============================================
+   MOUSE GLOW
+============================================ */
+#mouse-glow {
+  position: fixed;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,45,120,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  transition: left 0.3s ease, top 0.3s ease;
+}
+
+/* ============================================
+   NAVBAR
+============================================ */
+#navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(0px);
+}
+#navbar.scrolled {
+  background: rgba(5,5,8,0.85);
+  backdrop-filter: blur(20px);
+  padding: 14px 40px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.nav-logo {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 28px;
+  letter-spacing: 0.12em;
+  background: linear-gradient(90deg, var(--pink), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 0 8px rgba(255,45,120,0.7));
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: all 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 1px;
+  background: var(--pink);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+  box-shadow: var(--glow-pink);
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+.nav-cta {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  background: linear-gradient(90deg, var(--pink), var(--violet));
+  color: #fff !important;
+  padding: 8px 20px;
+  border-radius: 2px;
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  transition: all 0.3s !important;
+}
+.nav-cta:hover { filter: brightness(1.3); box-shadow: var(--glow-pink); }
+.nav-cta::after { display: none !important; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 5px;
+}
+.hamburger span {
+  display: block;
+  width: 24px; height: 2px;
+  background: var(--pink);
+  transition: all 0.3s;
+  transform-origin: center;
+}
+.hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  position: fixed;
+  top: 0; right: -100%;
+  width: min(320px, 100vw);
+  height: 100vh;
+  background: rgba(5,5,8,0.97);
+  backdrop-filter: blur(40px);
+  z-index: 999;
+  padding: 100px 40px 40px;
+  border-left: 1px solid var(--glass-border);
+  transition: right 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.mobile-menu.open { right: 0; }
+.mobile-menu a {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 28px;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  transition: color 0.3s;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 16px;
+}
+.mobile-menu a:hover { color: var(--pink); }
+
+/* ============================================
+   HERO SECTION
+============================================ */
+#hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,45,120,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 20% 60%, rgba(155,45,255,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 50% at 80% 40%, rgba(0,245,255,0.08) 0%, transparent 50%),
+    linear-gradient(180deg, #000 0%, #050510 40%, #070318 70%, #0a0208 100%);
+  z-index: 0;
+}
+
+/* City silhouette */
+.city-silhouette {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 55%;
+  z-index: 1;
+  overflow: hidden;
+}
+.city-silhouette svg { width: 100%; height: 100%; }
+
+/* Neon ground reflection */
+.ground-reflection {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 30%;
+  background: linear-gradient(0deg, rgba(255,45,120,0.08) 0%, transparent 100%);
+  z-index: 2;
+}
+
+/* Floating particles */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+/* Palm trees */
+.palm {
+  position: absolute;
+  bottom: 0;
+  z-index: 4;
+  opacity: 0.6;
+}
+.palm-left { left: 5%; }
+.palm-right { right: 5%; }
+
+.hero-content {
+  position: relative;
+  z-index: 20;
+  text-align: center;
+  max-width: 900px;
+  padding: 0 24px;
+}
+
+.hero-eyebrow {
+  font-family: 'Orbitron', monospace;
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  color: var(--pink);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 1s 3s ease forwards;
+}
+
+.hero-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(80px, 18vw, 200px);
+  line-height: 0.85;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+  opacity: 0;
+  animation: fadeUp 1s 3.2s ease forwards;
+}
+.hero-title .line1 {
+  display: block;
+  background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-title .line2 {
+  display: block;
+  background: linear-gradient(90deg, var(--pink), var(--violet), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(255,45,120,0.5));
+}
+
+.hero-roman {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(18px, 4vw, 36px);
+  letter-spacing: 0.6em;
+  color: rgba(255,255,255,0.15);
+  margin-bottom: 30px;
+  opacity: 0;
+  animation: fadeUp 1s 3.4s ease forwards;
+}
+
+.hero-desc {
+  font-size: 16px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  max-width: 500px;
+  margin: 0 auto 40px;
+  opacity: 0;
+  animation: fadeUp 1s 3.6s ease forwards;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 1s 3.8s ease forwards;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Orbitron', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 16px 36px;
+  background: linear-gradient(90deg, var(--pink), var(--violet));
+  color: #fff;
+  text-decoration: none;
+  clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--violet), var(--cyan));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.btn-primary:hover { box-shadow: var(--glow-pink); transform: translateY(-2px); }
+.btn-primary:hover::before { opacity: 1; }
+.btn-primary i, .btn-primary span { position: relative; z-index: 1; }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Orbitron', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 15px 36px;
+  background: transparent;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  box-shadow: var(--glow-cyan);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Orbitron', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 15px 36px;
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  border: 1px solid var(--glass-border);
+  clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+  transition: all 0.3s;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+.btn-ghost:hover { border-color: var(--violet); color: var(--violet); }
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeIn 1s 4.5s ease forwards;
+}
+.scroll-indicator span {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.3);
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(180deg, var(--pink), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.3); }
+}
+
+/* ============================================
+   SECTION BASE
+============================================ */
+section {
+  position: relative;
+  z-index: 10;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.section-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  color: var(--pink);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
+.section-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(40px, 8vw, 80px);
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+}
+.section-title .accent {
+  background: linear-gradient(90deg, var(--pink), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.section-line {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--pink), var(--violet));
+  margin: 20px auto 0;
+  box-shadow: var(--glow-pink);
+}
+
+/* ============================================
+   STATS BAR
+============================================ */
+#stats-bar {
+  background: rgba(255,45,120,0.05);
+  border-top: 1px solid rgba(255,45,120,0.2);
+  border-bottom: 1px solid rgba(255,45,120,0.2);
+  padding: 24px 40px;
+  display: flex;
+  justify-content: center;
+  gap: clamp(30px, 5vw, 100px);
+  flex-wrap: wrap;
+}
+.stat-item {
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 36px;
+  letter-spacing: 0.05em;
+  background: linear-gradient(90deg, var(--pink), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+}
+
+/* ============================================
+   NEWS SECTION
+============================================ */
+#news {
+  padding: 100px 40px;
+  background: linear-gradient(180deg, var(--dark) 0%, var(--dark2) 100%);
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.news-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+.news-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,45,120,0.05) 0%, transparent 60%);
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.news-card:hover { transform: translateY(-8px) scale(1.01); border-color: rgba(255,45,120,0.4); box-shadow: 0 20px 60px rgba(0,0,0,0.5), var(--glow-pink); }
+.news-card:hover::before { opacity: 1; }
+
+.news-img {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+.news-img-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+}
+.news-card:hover .news-img-inner { transform: scale(1.08); }
+
+.news-img-inner.bg1 { background: linear-gradient(135deg, #1a0025, #2d0040, #000015); }
+.news-img-inner.bg2 { background: linear-gradient(135deg, #001a2d, #002040, #000a15); }
+.news-img-inner.bg3 { background: linear-gradient(135deg, #1a1500, #2d2000, #0f0800); }
+.news-img-inner.bg4 { background: linear-gradient(135deg, #001a0a, #002d15, #000a05); }
+.news-img-inner.bg5 { background: linear-gradient(135deg, #1a000a, #2d0015, #0a0005); }
+.news-img-inner.bg6 { background: linear-gradient(135deg, #0a001a, #15002d, #050010); }
+
+.news-cat {
+  position: absolute;
+  top: 12px; left: 12px;
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  padding: 4px 10px;
+  background: var(--pink);
+  color: #fff;
+  text-transform: uppercase;
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+}
+
+.news-body {
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+.news-date {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 8px;
+}
+.news-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  color: #fff;
+  line-height: 1.1;
+}
+.news-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.news-read {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--pink);
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.3s;
+}
+.news-card:hover .news-read { gap: 10px; }
+
+/* ============================================
+   MAP SECTION
+============================================ */
+#map {
+  padding: 100px 40px;
+  background: var(--dark3);
+  overflow: hidden;
+}
+
+.map-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.map-frame {
+  border: 1px solid rgba(0,245,255,0.2);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  height: 600px;
+  background: radial-gradient(ellipse at 50% 50%, #001428 0%, #000a18 40%, #000510 100%);
+  box-shadow: 0 0 60px rgba(0,245,255,0.1), inset 0 0 60px rgba(0,0,0,0.5);
+}
+
+.map-scan {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  animation: scanMove 3s linear infinite;
+  z-index: 10;
+  opacity: 0.6;
+}
+@keyframes scanMove {
+  from { top: 0; } to { top: 100%; }
+}
+
+.map-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.map-zones {
+  position: absolute;
+  inset: 0;
+}
+
+.map-zone {
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.map-zone-shape {
+  border-radius: 50%;
+  transition: all 0.3s;
+  animation: zonePulse 3s ease-in-out infinite;
+}
+.map-zone:hover .map-zone-shape {
+  transform: scale(1.2);
+  filter: brightness(1.5);
+}
+.map-zone-label {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #fff;
+  text-shadow: 0 0 10px currentColor;
+  pointer-events: none;
+  z-index: 5;
+}
+.map-zone-tooltip {
+  position: absolute;
+  top: -50px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.9);
+  border: 1px solid var(--cyan);
+  padding: 6px 12px;
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--cyan);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+  border-radius: 2px;
+  z-index: 20;
+  pointer-events: none;
+}
+.map-zone:hover .map-zone-tooltip { opacity: 1; }
+
+@keyframes zonePulse {
+  0%, 100% { box-shadow: 0 0 0 0 currentColor; opacity: 0.8; }
+  50% { box-shadow: 0 0 0 10px transparent; opacity: 1; }
+}
+
+.map-holo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,245,255,0.02) 0%, transparent 50%, rgba(155,45,255,0.02) 100%);
+  pointer-events: none;
+}
+
+.map-corner {
+  position: absolute;
+  width: 20px; height: 20px;
+  border-color: var(--cyan);
+  border-style: solid;
+  opacity: 0.5;
+}
+.map-corner.tl { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
+.map-corner.tr { top: 10px; right: 10px; border-width: 2px 2px 0 0; }
+.map-corner.bl { bottom: 10px; left: 10px; border-width: 0 0 2px 2px; }
+.map-corner.br { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
+
+.map-sidebar {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: rgba(0,0,0,0.7);
+  border: 1px solid rgba(0,245,255,0.2);
+  border-radius: 2px;
+  padding: 16px;
+  width: 160px;
+  z-index: 10;
+}
+.map-sidebar-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--cyan);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.map-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+}
+.map-legend-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   VEHICLES SECTION
+============================================ */
+#vehicles {
+  padding: 100px 40px;
+  background: linear-gradient(180deg, var(--dark2) 0%, var(--dark) 100%);
+  overflow: hidden;
+}
+
+.vehicles-carousel {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+.vehicles-track-wrap {
+  overflow: hidden;
+  position: relative;
+}
+.vehicles-track {
+  display: flex;
+  gap: 24px;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.vehicle-card {
+  flex: 0 0 300px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+.vehicle-card:hover {
+  border-color: rgba(255,45,120,0.4);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), var(--glow-pink);
+}
+
+.vehicle-img {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 70px;
+  position: relative;
+  overflow: hidden;
+}
+.vehicle-img::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(0deg, var(--glass) 0%, transparent 100%);
+}
+
+.vehicle-rarity {
+  position: absolute;
+  top: 10px; right: 10px;
+  font-family: 'Orbitron', monospace;
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  padding: 3px 8px;
+  text-transform: uppercase;
+}
+.rarity-legendary { background: rgba(255,215,0,0.15); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); }
+.rarity-epic { background: rgba(155,45,255,0.15); color: var(--violet); border: 1px solid rgba(155,45,255,0.3); }
+.rarity-rare { background: rgba(0,245,255,0.15); color: var(--cyan); border: 1px solid rgba(0,245,255,0.3); }
+.rarity-common { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.1); }
+
+.vehicle-body { padding: 16px; }
+.vehicle-name {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+.vehicle-type {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.vehicle-stats { display: flex; flex-direction: column; gap: 6px; }
+.vehicle-stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.vehicle-stat-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.4);
+  width: 60px;
+}
+.vehicle-stat-bar {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.vehicle-stat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink), var(--violet));
+  border-radius: 1px;
+  box-shadow: var(--glow-pink);
+}
+.vehicle-stat-val {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.6);
+  width: 26px;
+  text-align: right;
+}
+
+.carousel-controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 32px;
+}
+.carousel-btn {
+  width: 44px; height: 44px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+  transition: all 0.3s;
+  font-size: 14px;
+}
+.carousel-btn:hover { border-color: var(--pink); color: var(--pink); box-shadow: var(--glow-pink); }
+
+/* ============================================
+   CHARACTERS SECTION
+============================================ */
+#characters {
+  padding: 100px 40px;
+  background: var(--dark3);
+}
+
+.char-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.char-card {
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  height: 360px;
+  transition: all 0.4s ease;
+}
+.char-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+
+.char-bg {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.6s ease;
+}
+.char-card:hover .char-bg { transform: scale(1.05); }
+
+.char-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.9) 100%);
+  z-index: 2;
+}
+
+.char-emoji {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -60%);
+  font-size: 90px;
+  z-index: 1;
+  transition: transform 0.4s ease;
+}
+.char-card:hover .char-emoji { transform: translate(-50%, -65%) scale(1.05); }
+
+.char-glow {
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 150%;
+  height: 50%;
+  border-radius: 50%;
+  filter: blur(40px);
+  z-index: 1;
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+.char-card:hover .char-glow { opacity: 0.6; }
+
+.char-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px;
+  z-index: 5;
+}
+.char-role {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.char-name {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 30px;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.char-desc {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.5;
+}
+
+.char-border {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 4px;
+  z-index: 6;
+  transition: border-color 0.3s;
+}
+.char-card:hover .char-border { border-color: rgba(255,45,120,0.4); box-shadow: inset 0 0 30px rgba(255,45,120,0.05); }
+
+/* ============================================
+   RP SECTION
+============================================ */
+#rp {
+  padding: 100px 40px;
+  background: linear-gradient(180deg, var(--dark) 0%, var(--dark2) 100%);
+}
+
+.rp-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.rp-dashboard {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  padding: 32px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.rp-dashboard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--pink), var(--violet), transparent);
+}
+
+.rp-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.rp-stat {
+  text-align: center;
+  padding: 16px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 2px;
+}
+.rp-stat-val {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 32px;
+  letter-spacing: 0.04em;
+  background: linear-gradient(90deg, var(--pink), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.rp-stat-lbl {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+}
+
+.rp-jobs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.rp-job {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.rp-job:hover { border-color: rgba(255,45,120,0.3); background: rgba(255,45,120,0.04); }
+.rp-job-icon { font-size: 24px; }
+.rp-job-info {}
+.rp-job-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+.rp-job-pay {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--pink);
+}
+
+.rp-join {
+  text-align: center;
+  margin-top: 40px;
+}
+.rp-server-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Orbitron', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 20px;
+}
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #00ff88;
+  box-shadow: 0 0 10px #00ff88;
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* ============================================
+   COMMUNITY SECTION
+============================================ */
+#community {
+  padding: 100px 40px;
+  background: var(--dark3);
+}
+
+.community-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.discord-widget {
+  background: linear-gradient(135deg, #36393f 0%, #2f3136 100%);
+  border: 1px solid rgba(88,101,242,0.3);
+  border-radius: 4px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.discord-widget::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: #5865f2;
+}
+.discord-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.discord-icon { font-size: 32px; color: #5865f2; }
+.discord-name {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 24px;
+  letter-spacing: 0.04em;
+}
+.discord-desc { font-size: 12px; color: rgba(255,255,255,0.5); }
+.discord-members {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.discord-member-count { text-align: center; }
+.dc-num {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 28px;
+  color: #5865f2;
+}
+.dc-lbl {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.4);
+}
+
+.clips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.clip-item {
+  aspect-ratio: 16/9;
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s;
+}
+.clip-item:hover { transform: scale(1.05); }
+.clip-thumb {
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+.clip-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.3s;
+  color: #fff;
+  font-size: 20px;
+}
+.clip-item:hover .clip-play { opacity: 1; }
+
+/* ============================================
+   SHOP SECTION
+============================================ */
+#shop {
+  padding: 100px 40px;
+  background: linear-gradient(180deg, var(--dark2) 0%, var(--dark) 100%);
+}
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.shop-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+}
+.shop-card:hover {
+  border-color: rgba(255,45,120,0.4);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), var(--glow-pink);
+}
+
+.shop-img {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  position: relative;
+  overflow: hidden;
+}
+.shop-img.bg1 { background: linear-gradient(135deg, #1a0010, #2a0020, #0a000a); }
+.shop-img.bg2 { background: linear-gradient(135deg, #000f1a, #001a2a, #00080f); }
+.shop-img.bg3 { background: linear-gradient(135deg, #1a1000, #2a1a00, #0a0800); }
+.shop-img.bg4 { background: linear-gradient(135deg, #0a001a, #15002a, #05000a); }
+.shop-img.bg5 { background: linear-gradient(135deg, #001a10, #002a18, #000a08); }
+
+.shop-badge {
+  position: absolute;
+  top: 10px; left: 10px;
+  font-family: 'Orbitron', monospace;
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  padding: 3px 8px;
+  background: var(--pink);
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.shop-body { padding: 16px; }
+.shop-name {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+.shop-sub {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.shop-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.shop-price {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 22px;
+  color: var(--pink);
+}
+.shop-btn {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  padding: 6px 14px;
+  background: linear-gradient(90deg, var(--pink), var(--violet));
+  color: #fff;
+  border: none;
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.shop-btn:hover { filter: brightness(1.2); }
+
+/* ============================================
+   FOOTER
+============================================ */
+#footer {
+  background: var(--dark2);
+  border-top: 1px solid var(--glass-border);
+  padding: 60px 40px 30px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto 40px;
+}
+
+.footer-brand {}
+.footer-logo {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 36px;
+  letter-spacing: 0.1em;
+  background: linear-gradient(90deg, var(--pink), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(255,45,120,0.5));
+  margin-bottom: 12px;
+}
+.footer-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  max-width: 280px;
+}
+.social-links {
+  display: flex;
+  gap: 12px;
+}
+.social-link {
+  width: 36px; height: 36px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s;
+  clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+.social-link:hover { border-color: var(--pink); color: var(--pink); box-shadow: var(--glow-pink); }
+
+.footer-col-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 20px;
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-links a {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.footer-links a:hover { color: var(--pink); }
+
+.newsletter-form {
+  display: flex;
+  gap: 0;
+  margin-top: 20px;
+}
+.newsletter-input {
+  flex: 1;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-right: none;
+  padding: 10px 14px;
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  outline: none;
+  border-radius: 0;
+}
+.newsletter-input::placeholder { color: rgba(255,255,255,0.25); }
+.newsletter-btn {
+  background: var(--pink);
+  border: none;
+  padding: 10px 16px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+.newsletter-btn:hover { background: var(--violet); }
+
+.footer-bottom {
+  border-top: 1px solid var(--glass-border);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-copy {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.25);
+}
+.footer-disclaimer {
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+  text-align: right;
+  max-width: 400px;
+}
+
+/* ============================================
+   ANIMATIONS
+============================================ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 @keyframes fadeIn {
-  from {opacity:0;}
-  to {opacity:1;}
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* HERO */
-.hero {
-  padding:120px 20px;
-  text-align:center;
-  background:linear-gradient(#0a0a12,#050507);
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ============================================
+   GLITCH EFFECT
+============================================ */
+.glitch {
+  position: relative;
+}
+.glitch::before, .glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.glitch::before {
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+  animation: glitch1 3s 5s ease infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+}
+.glitch::after {
+  background: linear-gradient(90deg, var(--pink), var(--orange));
+  animation: glitch2 3s 5s ease infinite;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+}
+@keyframes glitch1 {
+  0%, 85%, 100% { transform: translate(0); }
+  87% { transform: translate(-3px, 1px); }
+  89% { transform: translate(3px, -1px); }
+  91% { transform: translate(0); }
+}
+@keyframes glitch2 {
+  0%, 85%, 100% { transform: translate(0); }
+  87% { transform: translate(3px, -1px); }
+  89% { transform: translate(-3px, 1px); }
+  91% { transform: translate(0); }
 }
 
-.hero h1 {
-  font-size:38px;
+/* ============================================
+   NEON LINE DECORATIONS
+============================================ */
+.neon-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--pink), transparent);
+  opacity: 0.3;
 }
 
-.hero span {
-  color:#a855f7;
+/* ============================================
+   RESPONSIVE
+============================================ */
+@media (max-width: 1100px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .community-grid { grid-template-columns: 1fr; }
 }
 
-.btn {
-  margin-top:20px;
-  padding:14px 28px;
-  background:#a855f7;
-  border:none;
-  color:white;
-  border-radius:6px;
-  font-weight:600;
-  cursor:pointer;
-  transition:0.3s;
+@media (max-width: 768px) {
+  #navbar { padding: 16px 20px; }
+  #navbar.scrolled { padding: 12px 20px; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  #news { padding: 70px 20px; }
+  #map { padding: 70px 20px; }
+  .map-frame { height: 400px; }
+  #vehicles { padding: 70px 20px; }
+  #characters { padding: 70px 20px; }
+  #rp { padding: 70px 20px; }
+  #community { padding: 70px 20px; }
+  #shop { padding: 70px 20px; }
+  #footer { padding: 50px 20px 24px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .footer-disclaimer { text-align: center; }
+  .hero-buttons { flex-direction: column; align-items: center; }
+  #stats-bar { padding: 20px; gap: 20px; }
+  .rp-stats { grid-template-columns: repeat(2, 1fr); }
 }
 
-.btn:hover {
-  box-shadow:0 0 20px #a855f7;
+@media (max-width: 480px) {
+  .news-grid { grid-template-columns: 1fr; }
+  .char-grid { grid-template-columns: 1fr; }
+  .shop-grid { grid-template-columns: 1fr; }
+  .clips-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* AVANT APRES */
-.before-after {
-  padding:60px 20px;
-  text-align:center;
-}
+/* ============================================
+   SCROLLBAR
+============================================ */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--pink), var(--violet)); border-radius: 2px; }
 
-.before-after img {
-  width:100%;
-  border-radius:12px;
-  max-width:400px;
+/* ============================================
+   SECTION DIVIDERS
+============================================ */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  position: relative;
 }
-
-/* PRODUIT */
-.product {
-  padding:60px 20px;
-  text-align:center;
-}
-
-.product img {
-  width:80%;
-  max-width:350px;
-  border-radius:12px;
-}
-
-.price {
-  font-size:28px;
-  color:#c084fc;
-  margin:20px 0;
-}
-
-/* AVIS */
-.reviews {
-  padding:60px 20px;
-}
-
-.review {
-  background:#0a0a12;
-  padding:20px;
-  margin-bottom:15px;
-  border-radius:10px;
+.section-divider::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 0;
+  transform: translateX(-50%);
+  width: 60px; height: 1px;
+  background: linear-gradient(90deg, var(--pink), var(--violet));
+  box-shadow: var(--glow-pink);
 }
 </style>
 </head>
-
 <body>
 
-<!-- INTRO VIDEO -->
-<div id="intro">
-  <video autoplay muted loop playsinline>
-    <source src="https://s33.aconvert.com/convert/p3r68-cdx67/pj5vt-m7lme.webm">
-  </video>
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
 
-  <div class="intro-content">
-    <div class="intro-brand">
-      <img src="https://pdftolink.io/api/file/r2_dXNlcnMvZ3Vlc3QvMjU0OWEwN2UtNzFlZS00OTdjLTlmZDQtZmJhMmJmOTQwNjcyLnBuZw">
+<!-- Mouse Glow -->
+<div id="mouse-glow"></div>
+
+<!-- Scanlines -->
+<div class="scanlines"></div>
+
+<!-- Particles Canvas -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- Rain Canvas -->
+<canvas id="rain-canvas"></canvas>
+
+<!-- ============================================
+     LOADER
+============================================ -->
+<div id="loader">
+  <div class="loader-logo glitch" data-text="NEON VICE">NEON VICE</div>
+  <div class="loader-sub">GTA VI — Vice City Chronicles</div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar"></div>
+  </div>
+  <div class="loader-pct" id="loader-pct">0%</div>
+</div>
+
+<!-- ============================================
+     NAVBAR
+============================================ -->
+<nav id="navbar">
+  <a class="nav-logo" href="#hero">NEON VICE</a>
+  <ul class="nav-links">
+    <li><a href="#hero">Accueil</a></li>
+    <li><a href="#news">Actualités</a></li>
+    <li><a href="#map">Carte</a></li>
+    <li><a href="#vehicles">Véhicules</a></li>
+    <li><a href="#characters">Personnages</a></li>
+    <li><a href="#rp">RP</a></li>
+    <li><a href="#community">Communauté</a></li>
+    <li><a href="#shop">Boutique</a></li>
+    <li><a href="#hero" class="nav-cta">Connexion</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#hero" onclick="closeMobile()">Accueil</a>
+  <a href="#news" onclick="closeMobile()">Actualités</a>
+  <a href="#map" onclick="closeMobile()">Carte Interactive</a>
+  <a href="#vehicles" onclick="closeMobile()">Véhicules</a>
+  <a href="#characters" onclick="closeMobile()">Personnages</a>
+  <a href="#rp" onclick="closeMobile()">Mode RP</a>
+  <a href="#community" onclick="closeMobile()">Communauté</a>
+  <a href="#shop" onclick="closeMobile()">Boutique</a>
+</div>
+
+<!-- ============================================
+     HERO
+============================================ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <!-- City SVG Silhouette -->
+  <div class="city-silhouette">
+    <svg viewBox="0 0 1440 500" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="buildGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0a0015" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#050008" stop-opacity="1"/>
+        </linearGradient>
+        <filter id="glow-filter">
+          <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Buildings back layer -->
+      <rect x="0" y="200" width="80" height="300" fill="url(#buildGrad)" opacity="0.6"/>
+      <rect x="60" y="150" width="60" height="350" fill="url(#buildGrad)" opacity="0.5"/>
+      <rect x="100" y="180" width="90" height="320" fill="url(#buildGrad)" opacity="0.7"/>
+      <rect x="170" y="100" width="50" height="400" fill="url(#buildGrad)" opacity="0.6"/>
+      <rect x="200" y="130" width="70" height="370" fill="url(#buildGrad)" opacity="0.5"/>
+      <rect x="250" y="170" width="100" height="330" fill="url(#buildGrad)" opacity="0.8"/>
+      <rect x="330" y="90" width="60" height="410" fill="url(#buildGrad)" opacity="0.6"/>
+      <rect x="370" y="140" width="80" height="360" fill="url(#buildGrad)" opacity="0.5"/>
+      <rect x="430" y="110" width="120" height="390" fill="url(#buildGrad)" opacity="0.7"/>
+      <rect x="530" y="160" width="70" height="340" fill="url(#buildGrad)" opacity="0.6"/>
+      <rect x="580" y="80" width="90" height="420" fill="url(#buildGrad)" opacity="0.5"/>
+      <rect x="650" y="130" width="60" height="370" fill="url(#buildGrad)" opacity="0.8"/>
+      <rect x="690" y="100" width="100" height="400" fill="url(#buildGrad)" opacity="0.6"/>
+      <rect x="770" y="150" width="80" height="350" fill="url(#buildGrad)" opacity="0.5"/>
+      <rect x="830" y="90" width="120" height="410" fill="url(#buildGrad)" opacity="0.7"/>
+      <rect x="930" y="140" width="70" height="360" fill="url(#buildGrad)" opacity="0.6"/>
+      <rect x="980" y="110" width="90" height="390" fill="url(#buildGrad)" opacity="0.5"/>
+      <rect x="1050" y="160" width="100" height="340" fill="url(#buildGrad)" opacity="0.8"/>
+      <rect x="1130" y="120" width="60" height="380" fill="url(#buildGrad)" opacity="0.6"/>
+      <rect x="1170" y="80" width="80" height="420" fill="url(#buildGrad)" opacity="0.5"/>
+      <rect x="1230" y="150" width="100" height="350" fill="url(#buildGrad)" opacity="0.7"/>
+      <rect x="1310" y="100" width="130" height="400" fill="url(#buildGrad)" opacity="0.6"/>
+      <!-- Neon windows -->
+      <rect x="175" y="110" width="6" height="6" fill="#ff2d78" opacity="0.8" filter="url(#glow-filter)"/>
+      <rect x="185" y="110" width="6" height="6" fill="#ff2d78" opacity="0.5"/>
+      <rect x="175" y="125" width="6" height="6" fill="#00f5ff" opacity="0.7" filter="url(#glow-filter)"/>
+      <rect x="340" y="100" width="6" height="6" fill="#9b2dff" opacity="0.8" filter="url(#glow-filter)"/>
+      <rect x="350" y="100" width="6" height="6" fill="#ff2d78" opacity="0.6"/>
+      <rect x="590" y="95" width="8" height="5" fill="#00f5ff" opacity="0.9" filter="url(#glow-filter)"/>
+      <rect x="602" y="95" width="8" height="5" fill="#ff2d78" opacity="0.7"/>
+      <rect x="700" y="115" width="6" height="6" fill="#9b2dff" opacity="0.8" filter="url(#glow-filter)"/>
+      <rect x="845" y="105" width="8" height="5" fill="#ff2d78" opacity="0.9" filter="url(#glow-filter)"/>
+      <rect x="1180" y="95" width="6" height="6" fill="#00f5ff" opacity="0.8" filter="url(#glow-filter)"/>
+      <rect x="1190" y="115" width="6" height="6" fill="#9b2dff" opacity="0.7"/>
+      <!-- Ground neon reflection -->
+      <rect x="0" y="480" width="1440" height="20" fill="url(#buildGrad)" opacity="0.8"/>
+      <!-- Neon street lights glow -->
+      <ellipse cx="200" cy="490" rx="100" ry="10" fill="#ff2d78" opacity="0.08"/>
+      <ellipse cx="600" cy="490" rx="150" ry="12" fill="#9b2dff" opacity="0.06"/>
+      <ellipse cx="1000" cy="490" rx="120" ry="10" fill="#00f5ff" opacity="0.07"/>
+    </svg>
+  </div>
+
+  <div class="ground-reflection"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">▶ Vice City Chronicles — Coming Soon</div>
+    <h1 class="hero-title">
+      <span class="line1 glitch" data-text="GRAND THEFT">GRAND THEFT</span>
+      <span class="line2 glitch" data-text="AUTO VI">AUTO VI</span>
+    </h1>
+    <div class="hero-roman">VI • LEONIDA • VICE CITY</div>
+    <p class="hero-desc">Le monde ouvert le plus vaste jamais créé. Bienvenue à Leonida — là où rêves et crimes se mêlent sous les néons de Miami.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary"><i class="fas fa-map"></i><span>Explorer Leonida</span></button>
+      <a href="#community" class="btn-secondary"><i class="fab fa-discord"></i><span>Rejoindre Discord</span></a>
+      <button class="btn-ghost"><i class="fas fa-play"></i><span>Voir le Trailer</span></button>
     </div>
-    <button class="enter-btn" onclick="enter()">ENTRER</button>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ============================================
+     STATS BAR
+============================================ -->
+<div id="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num" data-target="2400000">0</div>
+    <div class="stat-label">Membres Discord</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="847">0</div>
+    <div class="stat-label">Serveurs RP</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="12500">0</div>
+    <div class="stat-label">Joueurs en ligne</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="96">0</div>
+    <div class="stat-label">Score Presse</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="350">0</div>
+    <div class="stat-label">Véhicules</div>
   </div>
 </div>
 
-<!-- SITE -->
-<div id="main">
-
-<section class="hero">
-  <h1>Poudre <span>Violette 5D</span></h1>
-  <p>Blanchiment instantané dès la première utilisation</p>
-  <button class="btn">Commander maintenant</button>
-</section>
-
-<section class="before-after">
-  <h2>Résultat</h2>
-  <img src="https://i.imgur.com/7QZ9Z5G.jpg">
-</section>
-
-<section class="product">
-  <h2>Notre Produit</h2>
-  <img src="https://i.imgur.com/2nCt3Sbl.jpg">
-  <div class="price">19,99€</div>
-  <button class="btn">Acheter</button>
-</section>
-
-<section class="reviews">
-  <h2>Avis Clients</h2>
-
-  <div class="review">
-    ⭐⭐⭐⭐⭐<br>
-    Résultat incroyable en 5 jours !
+<!-- ============================================
+     NEWS SECTION
+============================================ -->
+<section id="news">
+  <div class="section-header reveal">
+    <span class="section-label">// Flux d'Informations</span>
+    <h2 class="section-title">Dernières <span class="accent">Actualités</span></h2>
+    <div class="section-line"></div>
   </div>
 
-  <div class="review">
-    ⭐⭐⭐⭐⭐<br>
-    Produit doux et efficace
-  </div>
+  <div class="news-grid">
+    <div class="news-card reveal reveal-delay-1">
+      <div class="news-img">
+        <div class="news-img-inner bg1">🎬</div>
+        <span class="news-cat">Trailer</span>
+      </div>
+      <div class="news-body">
+        <div class="news-date">12 DÉCEMBRE 2023</div>
+        <h3 class="news-title">Trailer #1 — Record Absolu sur YouTube</h3>
+        <p class="news-desc">Le premier trailer de GTA VI a explosé tous les records avec 100M de vues en 24h. Un événement historique pour le jeu vidéo.</p>
+        <a href="#" class="news-read">Lire la suite <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
 
+    <div class="news-card reveal reveal-delay-2">
+      <div class="news-img">
+        <div class="news-img-inner bg2">🗺️</div>
+        <span class="news-cat">Carte</span>
+      </div>
+      <div class="news-body">
+        <div class="news-date">8 JANVIER 2024</div>
+        <h3 class="news-title">La Carte de Leonida — Deux Fois GTA V</h3>
+        <p class="news-desc">L'état fictif de Leonida s'étend sur un territoire massif incluant Vice City, les Everglades et des zones rurales inédites.</p>
+        <a href="#" class="news-read">Lire la suite <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="news-card reveal reveal-delay-3">
+      <div class="news-img">
+        <div class="news-img-inner bg3">🚔</div>
+        <span class="news-cat">Mode RP</span>
+      </div>
+      <div class="news-body">
+        <div class="news-date">15 FÉVRIER 2024</div>
+        <h3 class="news-title">RP GTA VI — Système Judiciaire Révolutionnaire</h3>
+        <p class="news-desc">GTA Online VI introduit un système légal complet : tribunaux, avocats, prisons avec durée réelle et système de libération conditionnelle.</p>
+        <a href="#" class="news-read">Lire la suite <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="news-card reveal reveal-delay-1">
+      <div class="news-img">
+        <div class="news-img-inner bg4">🏎️</div>
+        <span class="news-cat">Véhicules</span>
+      </div>
+      <div class="news-body">
+        <div class="news-date">3 MARS 2024</div>
+        <h3 class="news-title">350+ Véhicules Confirmés au Lancement</h3>
+        <p class="news-desc">Des supercars aux bateaux de luxe, en passant par des hydravions et des drones militaires — la plus grande flotte de l'histoire GTA.</p>
+        <a href="#" class="news-read">Lire la suite <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="news-card reveal reveal-delay-2">
+      <div class="news-img">
+        <div class="news-img-inner bg5">👮</div>
+        <span class="news-cat">Gameplay</span>
+      </div>
+      <div class="news-body">
+        <div class="news-date">20 AVRIL 2024</div>
+        <h3 class="news-title">Système Police Next-Gen — IA Avancée</h3>
+        <p class="news-desc">La police de Leonida utilise désormais une IA comportementale réaliste, des techniques d'enquête et une gestion des étoiles entièrement repensée.</p>
+        <a href="#" class="news-read">Lire la suite <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="news-card reveal reveal-delay-3">
+      <div class="news-img">
+        <div class="news-img-inner bg6">🌟</div>
+        <span class="news-cat">Graphismes</span>
+      </div>
+      <div class="news-body">
+        <div class="news-date">5 MAI 2024</div>
+        <h3 class="news-title">Ray-Tracing Complet & Météo Dynamique</h3>
+        <p class="news-desc">RAGE Engine IX propulse GTA VI dans une nouvelle ère visuelle : lumières volumétriques, pluie physique et cycle jour/nuit ultra-réaliste.</p>
+        <a href="#" class="news-read">Lire la suite <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
 </section>
 
-</div>
+<div class="section-divider"></div>
 
+<!-- ============================================
+     MAP SECTION
+============================================ -->
+<section id="map">
+  <div class="section-header reveal">
+    <span class="section-label">// Système Cartographique</span>
+    <h2 class="section-title">Carte <span class="accent">Interactive</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="map-container reveal">
+    <div class="map-frame">
+      <div class="map-scan"></div>
+      <div class="map-grid"></div>
+      <div class="map-holo-overlay"></div>
+      <div class="map-corner tl"></div>
+      <div class="map-corner tr"></div>
+      <div class="map-corner bl"></div>
+      <div class="map-corner br"></div>
+
+      <!-- Map Zones -->
+      <div class="map-zones" id="map-zones">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Sidebar -->
+      <div class="map-sidebar">
+        <div class="map-sidebar-title">Légende</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#ff2d78;box-shadow:0 0 6px #ff2d78"></div>Zone criminelle</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#00f5ff;box-shadow:0 0 6px #00f5ff"></div>Zone urbaine</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#ffd700;box-shadow:0 0 6px #ffd700"></div>Zone VIP</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#ff6b1a;box-shadow:0 0 6px #ff6b1a"></div>Zone militaire</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#9b2dff;box-shadow:0 0 6px #9b2dff"></div>Zone nocturne</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     VEHICLES SECTION
+============================================ -->
+<section id="vehicles">
+  <div class="section-header reveal">
+    <span class="section-label">// Garage Leonida</span>
+    <h2 class="section-title">Parc <span class="accent">Automobile</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="vehicles-carousel reveal">
+    <div class="vehicles-track-wrap">
+      <div class="vehicles-track" id="vehicles-track">
+
+        <div class="vehicle-card">
+          <div class="vehicle-img" style="background:linear-gradient(135deg,#1a0010,#2d0018,#000010)">🏎️</div>
+          <span class="vehicle-rarity rarity-legendary" style="position:absolute;top:10px;right:10px">Légendaire</span>
+          <div class="vehicle-body">
+            <div class="vehicle-name">Pegassi Inferno</div>
+            <div class="vehicle-type">Supercar · Électrique</div>
+            <div class="vehicle-stats">
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Vitesse</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:98%"></div></div>
+                <span class="vehicle-stat-val">98</span>
+              </div>
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Accél.</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:95%"></div></div>
+                <span class="vehicle-stat-val">95</span>
+              </div>
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Grip</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:88%"></div></div>
+                <span class="vehicle-stat-val">88</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vehicle-card">
+          <div class="vehicle-img" style="background:linear-gradient(135deg,#001020,#001830,#000812)">🛥️</div>
+          <span class="vehicle-rarity rarity-epic" style="position:absolute;top:10px;right:10px">Épique</span>
+          <div class="vehicle-body">
+            <div class="vehicle-name">Shénzi Ghost</div>
+            <div class="vehicle-type">Yacht de Luxe · Rapide</div>
+            <div class="vehicle-stats">
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Vitesse</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:75%"></div></div>
+                <span class="vehicle-stat-val">75</span>
+              </div>
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Capacité</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:90%"></div></div>
+                <span class="vehicle-stat-val">90</span>
+              </div>
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Armure</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:60%"></div></div>
+                <span class="vehicle-stat-val">60</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vehicle-card">
+          <div class="vehicle-img" style="background:linear-gradient(135deg,#201000,#301800,#100800)">🏍️</div>
+          <span class="vehicle-rarity rarity-rare" style="position:absolute;top:10px;right:10px">Rare</span>
+          <div class="vehicle-body">
+            <div class="vehicle-name">Principe Diavolo</div>
+            <div class="vehicle-type">Supermoto · Sport</div>
+            <div class="vehicle-stats">
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Vitesse</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:91%"></div></div>
+                <span class="vehicle-stat-val">91</span>
+              </div>
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Accél.</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:93%"></div></div>
+                <span class="vehicle-stat-val">93</span>
+              </div>
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Grip</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:70%"></div></div>
+                <span class="vehicle-stat-val">70</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vehicle-card">
+          <div class="vehicle-img" style="background:linear-gradient(135deg,#001810,#002515,#000f08)">✈️</div>
+          <span class="vehicle-rarity rarity-legendary" style="position:absolute;top:10px;right:10px">Légendaire</span>
+          <div class="vehicle-body">
+            <div class="vehicle-name">Mammoth Hydra II</div>
+            <div class="vehicle-type">Jet Militaire · Furtif</div>
+            <div class="vehicle-stats">
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Vitesse</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:100%"></div></div>
+                <span class="vehicle-stat-val">100</span>
+              </div>
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Armure</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:85%"></div></div>
+                <span class="vehicle-stat-val">85</span>
+              </div>
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Armes</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:95%"></div></div>
+                <span class="vehicle-stat-val">95</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vehicle-card">
+          <div class="vehicle-img" style="background:linear-gradient(135deg,#100018,#180025,#080010)">🚁</div>
+          <span class="vehicle-rarity rarity-epic" style="position:absolute;top:10px;right:10px">Épique</span>
+          <div class="vehicle-body">
+            <div class="vehicle-name">Akula Phantom</div>
+            <div class="vehicle-type">Hélicoptère · Furtif</div>
+            <div class="vehicle-stats">
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Vitesse</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:80%"></div></div>
+                <span class="vehicle-stat-val">80</span>
+              </div>
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Armure</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:88%"></div></div>
+                <span class="vehicle-stat-val">88</span>
+              </div>
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Furtif</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:100%"></div></div>
+                <span class="vehicle-stat-val">MAX</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vehicle-card">
+          <div class="vehicle-img" style="background:linear-gradient(135deg,#181800,#252500,#0f0f00)">🚗</div>
+          <span class="vehicle-rarity rarity-common" style="position:absolute;top:10px;right:10px">Standard</span>
+          <div class="vehicle-body">
+            <div class="vehicle-name">Vapid Lowrider '79</div>
+            <div class="vehicle-type">Muscle Car · Vintage</div>
+            <div class="vehicle-stats">
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Vitesse</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:65%"></div></div>
+                <span class="vehicle-stat-val">65</span>
+              </div>
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Style</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:100%"></div></div>
+                <span class="vehicle-stat-val">MAX</span>
+              </div>
+              <div class="vehicle-stat-row">
+                <span class="vehicle-stat-name">Perso.</span>
+                <div class="vehicle-stat-bar"><div class="vehicle-stat-fill" style="width:95%"></div></div>
+                <span class="vehicle-stat-val">95</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <button class="carousel-btn" id="car-prev"><i class="fas fa-chevron-left"></i></button>
+      <button class="carousel-btn" id="car-next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     CHARACTERS SECTION
+============================================ -->
+<section id="characters">
+  <div class="section-header reveal">
+    <span class="section-label">// Casting Leonida</span>
+    <h2 class="section-title">Les <span class="accent">Personnages</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="char-grid">
+
+    <div class="char-card reveal reveal-delay-1">
+      <div class="char-bg" style="background:linear-gradient(135deg,#1a0020,#2d0035,#0a0010)"></div>
+      <div class="char-gradient"></div>
+      <div class="char-emoji">👩‍🦱</div>
+      <div class="char-glow" style="background:var(--pink);"></div>
+      <div class="char-info">
+        <div class="char-role" style="color:var(--pink)">Protagoniste</div>
+        <div class="char-name">LUCIA</div>
+        <div class="char-desc">Criminelle venue de Cuba, cherchant sa place dans le monde impitoyable de Leonida.</div>
+      </div>
+      <div class="char-border"></div>
+    </div>
+
+    <div class="char-card reveal reveal-delay-2">
+      <div class="char-bg" style="background:linear-gradient(135deg,#001020,#001a35,#00080f)"></div>
+      <div class="char-gradient"></div>
+      <div class="char-emoji">👨‍🦲</div>
+      <div class="char-glow" style="background:var(--cyan);"></div>
+      <div class="char-info">
+        <div class="char-role" style="color:var(--cyan)">Protagoniste</div>
+        <div class="char-name">JASON</div>
+        <div class="char-desc">Ancien soldat reconverti dans le crime, loyal mais dangereusement imprévisible.</div>
+      </div>
+      <div class="char-border"></div>
+    </div>
+
+    <div class="char-card reveal reveal-delay-3">
+      <div class="char-bg" style="background:linear-gradient(135deg,#1a1000,#2d1a00,#0f0800)"></div>
+      <div class="char-gradient"></div>
+      <div class="char-emoji">👴</div>
+      <div class="char-glow" style="background:var(--gold);"></div>
+      <div class="char-info">
+        <div class="char-role" style="color:var(--gold)">Antagoniste</div>
+        <div class="char-name">EL ZORRO</div>
+        <div class="char-desc">Parrain du cartel dominant Leonida depuis l'ombre. Crainte et respect absolu.</div>
+      </div>
+      <div class="char-border"></div>
+    </div>
+
+    <div class="char-card reveal reveal-delay-4">
+      <div class="char-bg" style="background:linear-gradient(135deg,#100018,#1a0028,#080010)"></div>
+      <div class="char-gradient"></div>
+      <div class="char-emoji">👮</div>
+      <div class="char-glow" style="background:var(--violet);"></div>
+      <div class="char-info">
+        <div class="char-role" style="color:var(--violet)">Autorité</div>
+        <div class="char-name">CAPITAINE REYES</div>
+        <div class="char-desc">Chef de la LCPD anti-gang. Incorruptible — ou presque — face aux millions du cartel.</div>
+      </div>
+      <div class="char-border"></div>
+    </div>
+
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     RP SECTION
+============================================ -->
+<section id="rp">
+  <div class="section-header reveal">
+    <span class="section-label">// FiveM Leonida RP</span>
+    <h2 class="section-title">Mode <span class="accent">RP</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="rp-container">
+    <div class="rp-dashboard reveal">
+      <div class="rp-stats">
+        <div class="rp-stat">
+          <div class="rp-stat-val" data-target="1247">0</div>
+          <div class="rp-stat-lbl">Joueurs en ligne</div>
+        </div>
+        <div class="rp-stat">
+          <div class="rp-stat-val" data-target="48">0</div>
+          <div class="rp-stat-lbl">Factions actives</div>
+        </div>
+        <div class="rp-stat">
+          <div class="rp-stat-val" data-target="156">0</div>
+          <div class="rp-stat-lbl">Entreprises</div>
+        </div>
+        <div class="rp-stat">
+          <div class="rp-stat-val" data-target="2800000">0</div>
+          <div class="rp-stat-lbl">$ en circulation</div>
+        </div>
+      </div>
+
+      <div class="rp-jobs">
+        <div class="rp-job"><span class="rp-job-icon">👮</span><div class="rp-job-info"><div class="rp-job-name">Police LCPD</div><div class="rp-job-pay">$4,200 / heure</div></div></div>
+        <div class="rp-job"><span class="rp-job-icon">🚑</span><div class="rp-job-info"><div class="rp-job-name">EMS Paramédicaux</div><div class="rp-job-pay">$3,800 / heure</div></div></div>
+        <div class="rp-job"><span class="rp-job-icon">💊</span><div class="rp-job-info"><div class="rp-job-name">Trafiquant Cartel</div><div class="rp-job-pay">$12,000 / risque</div></div></div>
+        <div class="rp-job"><span class="rp-job-icon">🏦</span><div class="rp-job-info"><div class="rp-job-name">Braqueur de Banques</div><div class="rp-job-pay">$50,000 / opération</div></div></div>
+        <div class="rp-job"><span class="rp-job-icon">🏗️</span><div class="rp-job-info"><div class="rp-job-name">Promoteur Immobilier</div><div class="rp-job-pay">$8,500 / heure</div></div></div>
+        <div class="rp-job"><span class="rp-job-icon">🎰</span><div class="rp-job-info"><div class="rp-job-name">Gérant Casino</div><div class="rp-job-pay">$6,000 / heure</div></div></div>
+        <div class="rp-job"><span class="rp-job-icon">⚖️</span><div class="rp-job-info"><div class="rp-job-name">Avocat / Juge</div><div class="rp-job-pay">$5,200 / heure</div></div></div>
+        <div class="rp-job"><span class="rp-job-icon">🚢</span><div class="rp-job-info"><div class="rp-job-name">Contrebandier</div><div class="rp-job-pay">$18,000 / cargo</div></div></div>
+      </div>
+    </div>
+
+    <div class="rp-join reveal">
+      <div class="rp-server-status">
+        <span class="status-dot"></span>
+        Serveur en ligne — 1 247 / 2 000 joueurs
+      </div>
+      <br>
+      <button class="btn-primary"><i class="fas fa-server"></i><span>Rejoindre le Serveur RP</span></button>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     COMMUNITY SECTION
+============================================ -->
+<section id="community">
+  <div class="section-header reveal">
+    <span class="section-label">// Neon Vice Network</span>
+    <h2 class="section-title">Notre <span class="accent">Communauté</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="community-grid">
+
+    <div class="reveal">
+      <div class="discord-widget">
+        <div class="discord-header">
+          <i class="fab fa-discord discord-icon"></i>
+          <div>
+            <div class="discord-name">NEON VICE</div>
+            <div class="discord-desc">Serveur officiel de la communauté</div>
+          </div>
+        </div>
+        <div class="discord-members">
+          <div class="discord-member-count">
+            <div class="dc-num">2.4M</div>
+            <div class="dc-lbl">Membres</div>
+          </div>
+          <div class="discord-member-count">
+            <div class="dc-num" style="color:#00ff88">18,742</div>
+            <div class="dc-lbl">En ligne</div>
+          </div>
+        </div>
+        <a href="#" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none">
+          <i class="fab fa-discord"></i><span>Rejoindre le Discord</span>
+        </a>
+      </div>
+
+      <div style="margin-top:20px;background:var(--glass);border:1px solid var(--glass-border);border-radius:4px;padding:20px;">
+        <div class="section-label" style="margin-bottom:12px">Forums & Crews</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:2px;">
+            <span style="font-size:13px">💬 Discussions RP</span>
+            <span style="font-family:'Orbitron',monospace;font-size:9px;color:var(--pink)">2,847 posts</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:2px;">
+            <span style="font-size:13px">🎮 Guides & Tutos</span>
+            <span style="font-family:'Orbitron',monospace;font-size:9px;color:var(--cyan)">1,203 guides</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:2px;">
+            <span style="font-size:13px">🚔 Recrutement Gangs</span>
+            <span style="font-family:'Orbitron',monospace;font-size:9px;color:var(--violet)">340 gangs actifs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-2">
+      <div style="font-family:'Orbitron',monospace;font-size:9px;letter-spacing:0.3em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:16px">Galerie Communautaire</div>
+      <div class="clips-grid">
+        <div class="clip-item"><div class="clip-thumb" style="background:linear-gradient(135deg,#1a001a,#2d002d)">🌆</div><div class="clip-play"><i class="fas fa-play"></i></div></div>
+        <div class="clip-item"><div class="clip-thumb" style="background:linear-gradient(135deg,#001a1a,#002d2d)">🏎️</div><div class="clip-play"><i class="fas fa-play"></i></div></div>
+        <div class="clip-item"><div class="clip-thumb" style="background:linear-gradient(135deg,#1a0a00,#2d1800)">💥</div><div class="clip-play"><i class="fas fa-play"></i></div></div>
+        <div class="clip-item"><div class="clip-thumb" style="background:linear-gradient(135deg,#001a00,#002d00)">🌴</div><div class="clip-play"><i class="fas fa-play"></i></div></div>
+        <div class="clip-item"><div class="clip-thumb" style="background:linear-gradient(135deg,#0a001a,#15002d)">🌙</div><div class="clip-play"><i class="fas fa-play"></i></div></div>
+        <div class="clip-item"><div class="clip-thumb" style="background:linear-gradient(135deg,#1a0a1a,#2d152d)">🎭</div><div class="clip-play"><i class="fas fa-play"></i></div></div>
+      </div>
+
+      <div style="margin-top:20px;background:var(--glass);border:1px solid var(--glass-border);border-radius:4px;padding:20px;">
+        <div class="section-label" style="margin-bottom:12px">Activité en temps réel</div>
+        <div style="display:flex;flex-direction:column;gap:8px;" id="activity-feed">
+          <div style="display:flex;gap:10px;align-items:center;font-size:12px;color:rgba(255,255,255,0.5)"><span style="color:var(--pink)">●</span> <b style="color:#fff">NightRider_85</b> a rejoint le serveur RP</div>
+          <div style="display:flex;gap:10px;align-items:center;font-size:12px;color:rgba(255,255,255,0.5)"><span style="color:var(--cyan)">●</span> <b style="color:#fff">Lucia_Fan</b> a posté un screenshot</div>
+          <div style="display:flex;gap:10px;align-items:center;font-size:12px;color:rgba(255,255,255,0.5)"><span style="color:var(--violet)">●</span> Nouveau gang créé: <b style="color:#fff">Los Diablos</b></div>
+          <div style="display:flex;gap:10px;align-items:center;font-size:12px;color:rgba(255,255,255,0.5)"><span style="color:var(--gold)">●</span> <b style="color:#fff">ViceKing</b> a battu le record de vitesse</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     SHOP SECTION
+============================================ -->
+<section id="shop">
+  <div class="section-header reveal">
+    <span class="section-label">// Merch Officiel</span>
+    <h2 class="section-title">La <span class="accent">Boutique</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="shop-grid">
+
+    <div class="shop-card reveal reveal-delay-1">
+      <div class="shop-img bg1">👕</div>
+      <span class="shop-badge">Nouveau</span>
+      <div class="shop-body">
+        <div class="shop-name">T-Shirt Neon Vice</div>
+        <div class="shop-sub">Collection Premium · Noir</div>
+        <div class="shop-footer">
+          <div class="shop-price">€34.99</div>
+          <button class="shop-btn">Acheter</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-card reveal reveal-delay-2">
+      <div class="shop-img bg2">🧥</div>
+      <span class="shop-badge" style="background:var(--violet)">Limité</span>
+      <div class="shop-body">
+        <div class="shop-name">Hoodie GTA VI</div>
+        <div class="shop-sub">Édition Collector · Vice City</div>
+        <div class="shop-footer">
+          <div class="shop-price">€79.99</div>
+          <button class="shop-btn">Acheter</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-card reveal reveal-delay-3">
+      <div class="shop-img bg3">🖼️</div>
+      <div class="shop-body">
+        <div class="shop-name">Poster Leonida</div>
+        <div class="shop-sub">Art Print · 70x100cm</div>
+        <div class="shop-footer">
+          <div class="shop-price">€24.99</div>
+          <button class="shop-btn">Acheter</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-card reveal reveal-delay-1">
+      <div class="shop-img bg4">🎮</div>
+      <span class="shop-badge" style="background:var(--gold);color:#000">Promo</span>
+      <div class="shop-body">
+        <div class="shop-name">Gaming Pack</div>
+        <div class="shop-sub">Mousepad XL + Stickers</div>
+        <div class="shop-footer">
+          <div class="shop-price">€49.99</div>
+          <button class="shop-btn">Acheter</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-card reveal reveal-delay-2">
+      <div class="shop-img bg5">⌨️</div>
+      <div class="shop-body">
+        <div class="shop-name">Casquette Vice City</div>
+        <div class="shop-sub">Snapback · Broderie dorée</div>
+        <div class="shop-footer">
+          <div class="shop-price">€29.99</div>
+          <button class="shop-btn">Acheter</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+============================================ -->
+<footer id="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">NEON VICE</div>
+      <p class="footer-desc">Le site fan ultime dédié à GTA VI. Actualités, guides, mode RP, communauté — tout l'univers de Leonida en un seul endroit.</p>
+      <div class="social-links">
+        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Navigation</div>
+      <ul class="footer-links">
+        <li><a href="#hero"><i class="fas fa-chevron-right" style="font-size:8px"></i> Accueil</a></li>
+        <li><a href="#news"><i class="fas fa-chevron-right" style="font-size:8px"></i> Actualités</a></li>
+        <li><a href="#map"><i class="fas fa-chevron-right" style="font-size:8px"></i> Carte</a></li>
+        <li><a href="#vehicles"><i class="fas fa-chevron-right" style="font-size:8px"></i> Véhicules</a></li>
+        <li><a href="#rp"><i class="fas fa-chevron-right" style="font-size:8px"></i> Mode RP</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Communauté</div>
+      <ul class="footer-links">
+        <li><a href="#"><i class="fas fa-chevron-right" style="font-size:8px"></i> Discord</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right" style="font-size:8px"></i> Forums</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right" style="font-size:8px"></i> Galerie</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right" style="font-size:8px"></i> Crews</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right" style="font-size:8px"></i> Boutique</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Newsletter</div>
+      <p style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:16px;line-height:1.6">Reçois les dernières actus GTA VI directement dans ta boîte mail.</p>
+      <div class="newsletter-form">
+        <input type="email" class="newsletter-input" placeholder="ton@email.com">
+        <button class="newsletter-btn"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2024 NEON VICE — Fan Site Non Officiel. Tous droits réservés.</div>
+    <div class="footer-disclaimer">GTA VI, Grand Theft Auto, Rockstar Games sont des marques déposées de Take-Two Interactive. Ce site est un fan-site non affilié.</div>
+  </div>
+</footer>
+
+<!-- ============================================
+     JAVASCRIPT
+============================================ -->
 <script>
-function enter(){
-  document.getElementById("intro").style.opacity = "0";
+/* ============================================
+   LOADER
+============================================ */
+const loader = document.getElementById('loader');
+const pct = document.getElementById('loader-pct');
+let progress = 0;
+const interval = setInterval(() => {
+  progress += Math.random() * 3;
+  if (progress >= 100) {
+    progress = 100;
+    clearInterval(interval);
+    setTimeout(() => {
+      loader.classList.add('hidden');
+      document.body.style.cursor = 'none';
+    }, 500);
+  }
+  pct.textContent = Math.floor(progress) + '%';
+}, 40);
 
-  setTimeout(() => {
-    document.getElementById("intro").style.display="none";
-    document.getElementById("main").style.display="block";
-  }, 600);
+/* ============================================
+   CUSTOM CURSOR
+============================================ */
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursor-trail');
+const mouseGlow = document.getElementById('mouse-glow');
+let mx = 0, my = 0, tx = 0, ty = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx - 6 + 'px';
+  cursor.style.top = my - 6 + 'px';
+  mouseGlow.style.left = mx + 'px';
+  mouseGlow.style.top = my + 'px';
+});
+
+function animTrail() {
+  tx += (mx - tx) * 0.12;
+  ty += (my - ty) * 0.12;
+  trail.style.left = tx - 20 + 'px';
+  trail.style.top = ty - 20 + 'px';
+  requestAnimationFrame(animTrail);
 }
-</script>
+animTrail();
 
+document.querySelectorAll('a, button, .news-card, .vehicle-card, .char-card, .shop-card, .rp-job, .clip-item').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'scale(2)';
+    trail.style.transform = 'scale(1.4)';
+    trail.style.borderColor = 'rgba(0,245,255,0.6)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'scale(1)';
+    trail.style.transform = 'scale(1)';
+    trail.style.borderColor = 'rgba(255,45,120,0.4)';
+  });
+});
+
+/* ============================================
+   NAVBAR SCROLL
+============================================ */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) navbar.classList.add('scrolled');
+  else navbar.classList.remove('scrolled');
+});
+
+/* ============================================
+   MOBILE MENU
+============================================ */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  mobileMenu.classList.toggle('open');
+});
+function closeMobile() {
+  hamburger.classList.remove('active');
+  mobileMenu.classList.remove('open');
+}
+
+/* ============================================
+   PARTICLES
+============================================ */
+const pCanvas = document.getElementById('particles-canvas');
+const pCtx = pCanvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() {
+  pCanvas.width = window.innerWidth;
+  pCanvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function createParticle() {
+  return {
+    x: Math.random() * pCanvas.width,
+    y: Math.random() * pCanvas.height,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: -Math.random() * 0.5 - 0.1,
+    size: Math.random() * 2 + 0.5,
+    life: Math.random(),
+    maxLife: Math.random() * 0.5 + 0.5,
+    color: ['#ff2d78','#9b2dff','#00f5ff','#ff6b1a'][Math.floor(Math.random()*4)]
+  };
+}
+
+for (let i = 0; i < 80; i++) particles.push(createParticle());
+
+function animParticles() {
+  pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+  particles.forEach((p, i) => {
+    p.x += p.vx; p.y += p.vy; p.life += 0.005;
+    if (p.life > p.maxLife || p.y < 0) {
+      particles[i] = createParticle();
+      particles[i].y = pCanvas.height;
+      return;
+    }
+    const alpha = Math.sin(p.life / p.maxLife * Math.PI) * 0.7;
+    pCtx.beginPath();
+    pCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    pCtx.fillStyle = p.color;
+    pCtx.globalAlpha = alpha;
+    pCtx.fill();
+    pCtx.globalAlpha = 1;
+  });
+  requestAnimationFrame(animParticles);
+}
+animParticles();
+
+/* ============================================
+   RAIN
+============================================ */
+const rCanvas = document.getElementById('rain-canvas');
+const rCtx = rCanvas.getContext('2d');
+let drops = [];
+
+function resizeRain() {
+  rCanvas.width = window.innerWidth;
+  rCanvas.height = window.innerHeight;
+}
+resizeRain();
+window.addEventListener('resize', resizeRain);
+
+for (let i = 0; i < 120; i++) {
+  drops.push({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    len: Math.random() * 20 + 10,
+    speed: Math.random() * 4 + 3,
+    opacity: Math.random() * 0.3 + 0.1
+  });
+}
+
+function animRain() {
+  rCtx.clearRect(0, 0, rCanvas.width, rCanvas.height);
+  rCtx.strokeStyle = '#88aaff';
+  drops.forEach(d => {
+    rCtx.globalAlpha = d.opacity;
+    rCtx.lineWidth = 0.5;
+    rCtx.beginPath();
+    rCtx.moveTo(d.x, d.y);
+    rCtx.lineTo(d.x - 1, d.y + d.len);
+    rCtx.stroke();
+    d.y += d.speed;
+    d.x -= 0.5;
+    if (d.y > rCanvas.height) {
+      d.y = -d.len;
+      d.x = Math.random() * rCanvas.width;
+    }
+  });
+  rCtx.globalAlpha = 1;
+  requestAnimationFrame(animRain);
+}
+animRain();
+
+/* ============================================
+   REVEAL ON SCROLL
+============================================ */
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+/* ============================================
+   COUNTER ANIMATION
+============================================ */
+function animCounter(el, target) {
+  let current = 0;
+  const step = target / 60;
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) { current = target; clearInterval(timer); }
+    let val = Math.floor(current);
+    if (target >= 1000000) el.textContent = (val / 1000000).toFixed(1) + 'M';
+    else if (target >= 1000) el.textContent = val.toLocaleString();
+    else el.textContent = val;
+  }, 20);
+}
+
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const target = parseInt(e.target.getAttribute('data-target'));
+      animCounter(e.target, target);
+      counterObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
+
+/* ============================================
+   MAP ZONES
+============================================ */
+const zones = [
+  { x: 50, y: 60, w: 80, h: 60, color: '#00f5ff', label: 'Vice City', name: '🌆 Vice City Downtown' },
+  { x: 20, y: 30, w: 50, h: 40, color: '#ff2d78', label: 'Port Criminel', name: '⚓ Port Sud' },
+  { x: 70, y: 20, w: 60, h: 50, color: '#9b2dff', label: 'Night District', name: '🎰 Club District' },
+  { x: 15, y: 65, w: 55, h: 45, color: '#ffd700', label: 'Quartiers VIP', name: '💎 Star Island' },
+  { x: 55, y: 30, w: 40, h: 35, color: '#ff6b1a', label: 'Base Militaire', name: '🪖 Fort Zancudo' },
+  { x: 35, y: 50, w: 45, h: 35, color: '#00f5ff', label: 'Aéroport', name: '✈️ Vice City Intl' },
+  { x: 75, y: 65, w: 50, h: 40, color: '#ff2d78', label: 'Everglades', name: '🌿 Everglades' },
+  { x: 40, y: 15, w: 35, h: 30, color: '#ffd700', label: 'Autoroutes', name: '🛣️ Interstate 95' },
+];
+
+const mapZones = document.getElementById('map-zones');
+zones.forEach(z => {
+  const div = document.createElement('div');
+  div.className = 'map-zone';
+  div.style.cssText = `left:${z.x}%;top:${z.y}%;width:${z.w}px;height:${z.h}px;`;
+  div.innerHTML = `
+    <div class="map-zone-shape" style="width:${z.w}px;height:${z.h}px;background:${z.color}22;border:1px solid ${z.color}55;box-shadow:0 0 20px ${z.color}33;color:${z.color};animation-delay:${Math.random()*2}s"></div>
+    <div class="map-zone-label" style="color:${z.color};font-size:7px">${z.label}</div>
+    <div class="map-zone-tooltip">${z.name}</div>
+  `;
+  mapZones.appendChild(div);
+});
+
+/* ============================================
+   VEHICLES CAROUSEL
+============================================ */
+const track = document.getElementById('vehicles-track');
+const prevBtn = document.getElementById('car-prev');
+const nextBtn = document.getElementById('car-next');
+let carIndex = 0;
+const cardWidth = 324;
+
+nextBtn.addEventListener('click', () => {
+  const max = track.children.length - Math.floor(track.parentElement.offsetWidth / cardWidth);
+  if (carIndex < max) { carIndex++; track.style.transform = `translateX(-${carIndex * cardWidth}px)`; }
+});
+prevBtn.addEventListener('click', () => {
+  if (carIndex > 0) { carIndex--; track.style.transform = `translateX(-${carIndex * cardWidth}px)`; }
+});
+
+/* ============================================
+   SMOOTH SCROLL
+============================================ */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ============================================
+   ACTIVITY FEED
+============================================ */
+const activities = [
+  ['var(--pink)', 'Darkwing', 'a rejoint le serveur RP'],
+  ['var(--cyan)', 'MiamiDreamer', 'a posté un clip'],
+  ['var(--violet)', 'Nouveau gang créé', 'Los Nocturnos'],
+  ['var(--gold)', 'QueenLucia99', 'a battu le record de vol'],
+  ['var(--pink)', 'NeonKnight', 'a rejoint le Discord'],
+  ['#00ff88', 'Serveur RP', 'a atteint 1300 joueurs'],
+];
+let actIdx = 0;
+const feed = document.getElementById('activity-feed');
+setInterval(() => {
+  const a = activities[actIdx % activities.length];
+  const item = document.createElement('div');
+  item.style.cssText = 'display:flex;gap:10px;align-items:center;font-size:12px;color:rgba(255,255,255,0.5);animation:fadeIn 0.5s ease';
+  item.innerHTML = `<span style="color:${a[0]}">●</span> <b style="color:#fff">${a[1]}</b> ${a[2]}`;
+  feed.insertBefore(item, feed.firstChild);
+  if (feed.children.length > 4) feed.removeChild(feed.lastChild);
+  actIdx++;
+}, 3000);
+
+/* ============================================
+   PARALLAX HERO
+============================================ */
+document.addEventListener('mousemove', e => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 20;
+  const y = (e.clientY / window.innerHeight - 0.5) * 10;
+  document.querySelector('.city-silhouette').style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+  document.querySelector('.hero-content').style.transform = `translate(${x * -0.1}px, ${y * -0.1}px)`;
+});
+</script>
 </body>
 </html>
