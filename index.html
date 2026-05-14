@@ -3,1310 +3,1953 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Whole Melt Extracts — The Sweetest Cloud Experience</title>
+<title>Whole Melt Extracts — Premium California</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --candy-pink: #ff6eb4;
-  --deep-pink: #e91e8c;
-  --violet: #9b59b6;
-  --electric-violet: #7c3aed;
-  --honey: #f59e0b;
-  --electric-blue: #3b82f6;
-  --acid-green: #39ff14;
-  --bg-dark: #0a000f;
-  --glass: rgba(255,255,255,0.06);
-  --glass-border: rgba(255,255,255,0.12);
-}
-
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-
-/* ── CUSTOM SCROLLBAR ── */
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-track{background:#0a000f;}
-::-webkit-scrollbar-thumb{background:linear-gradient(var(--candy-pink),var(--electric-violet));border-radius:2px;}
-
-/* ── CURSOR ── */
-.cursor{position:fixed;width:16px;height:16px;border-radius:50%;background:var(--candy-pink);mix-blend-mode:screen;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s;}
-.cursor-trail{position:fixed;width:36px;height:36px;border-radius:50%;border:1px solid var(--candy-pink);opacity:.4;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .25s,opacity .25s;}
-
-/* ════════════════════════════════════
-   INTRO SCREEN
-═══════════════════════════════════════ */
-#intro{
-  position:fixed;inset:0;z-index:10000;
-  background:#000;
-  display:flex;align-items:center;justify-content:center;
-}
-#intro video{
-  width:100%;height:100%;object-fit:cover;
-}
-#skip-btn{
-  position:absolute;bottom:40px;right:40px;
-  padding:12px 28px;
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.3);
-  backdrop-filter:blur(12px);
-  color:#fff;font-family:'Syne',sans-serif;font-size:.85rem;letter-spacing:.15em;
-  cursor:pointer;border-radius:50px;
-  transition:all .3s;text-transform:uppercase;
-}
-#skip-btn:hover{background:var(--candy-pink);border-color:var(--candy-pink);}
-.intro-hidden{opacity:0;pointer-events:none;transition:opacity .8s ease;}
-
-/* ════════════════════════════════════
-   GLOBAL BODY
-═══════════════════════════════════════ */
-body{
-  background:var(--bg-dark);
-  color:#fff;
-  font-family:'DM Sans',sans-serif;
-  overflow-x:hidden;
-}
-
-/* ── PARTICLES CANVAS ── */
-#particles-canvas{
-  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6;
-}
-
-/* ── NOISE OVERLAY ── */
-body::before{
-  content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity:.025;
-}
-
-/* ════════════════════════════════════
-   HEADER / NAV
-═══════════════════════════════════════ */
-header{
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  padding:0 40px;
-  display:flex;align-items:center;justify-content:space-between;
-  height:72px;
-  background:rgba(10,0,15,.7);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--glass-border);
-  transition:all .4s;
-}
-header.scrolled{
-  background:rgba(10,0,15,.95);
-  box-shadow:0 0 40px rgba(255,110,180,.08);
-}
-
-.logo{
-  font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;
-  background:linear-gradient(90deg,var(--candy-pink),var(--honey),var(--electric-blue));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  letter-spacing:.05em;white-space:nowrap;
-}
-.logo span{font-size:.65rem;display:block;letter-spacing:.3em;font-weight:400;margin-top:-4px;background:linear-gradient(90deg,var(--violet),var(--candy-pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-
-nav{display:flex;gap:32px;align-items:center;}
-nav a{
-  font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);
-  text-decoration:none;transition:color .3s;position:relative;
-}
-nav a::after{
-  content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;
-  background:var(--candy-pink);transition:width .3s;
-}
-nav a:hover{color:#fff;}
-nav a:hover::after{width:100%;}
-
-.cart-btn{
-  width:42px;height:42px;border-radius:50%;
-  background:linear-gradient(135deg,var(--candy-pink),var(--electric-violet));
-  border:none;color:#fff;cursor:pointer;font-size:1rem;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;transition:transform .3s,box-shadow .3s;
-}
-.cart-btn:hover{transform:scale(1.1);box-shadow:0 0 20px var(--candy-pink);}
-.cart-count{
-  position:absolute;top:-4px;right:-4px;
-  background:var(--honey);color:#000;border-radius:50%;
-  width:18px;height:18px;font-size:.6rem;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
-}
-
-/* HAMBURGER */
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;border:none;background:none;padding:4px;}
-.hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:all .3s;}
-.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
-.hamburger.active span:nth-child(2){opacity:0;}
-.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
-
-.mobile-menu{
-  display:none;position:fixed;inset:0;z-index:999;
-  background:rgba(10,0,15,.97);backdrop-filter:blur(30px);
-  flex-direction:column;align-items:center;justify-content:center;gap:36px;
-}
-.mobile-menu.open{display:flex;}
-.mobile-menu a{font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;color:#fff;text-decoration:none;letter-spacing:.1em;transition:color .3s;}
-.mobile-menu a:hover{color:var(--candy-pink);}
-
-/* ════════════════════════════════════
-   HERO
-═══════════════════════════════════════ */
-.hero{
-  min-height:100vh;position:relative;z-index:2;
-  display:flex;align-items:center;justify-content:center;
-  text-align:center;overflow:hidden;
-  padding-top:72px;
-}
-
-/* animated gradient bg */
-.hero-bg{
-  position:absolute;inset:0;
-  background:radial-gradient(ellipse 80% 60% at 50% 40%, rgba(155,89,182,.35) 0%,transparent 70%),
-             radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255,110,180,.25) 0%,transparent 60%),
-             radial-gradient(ellipse 60% 50% at 80% 20%, rgba(59,130,246,.2) 0%,transparent 60%),
-             #0a000f;
-  animation:bgPulse 8s ease-in-out infinite;
-}
-@keyframes bgPulse{
-  0%,100%{filter:hue-rotate(0deg);}
-  50%{filter:hue-rotate(20deg);}
-}
-
-/* floating candy blobs */
-.blob{
-  position:absolute;border-radius:50%;filter:blur(80px);opacity:.35;animation:blobFloat 10s ease-in-out infinite;
-}
-.blob:nth-child(1){width:500px;height:500px;background:var(--candy-pink);top:-100px;left:-100px;animation-delay:0s;}
-.blob:nth-child(2){width:400px;height:400px;background:var(--electric-violet);bottom:-100px;right:-80px;animation-delay:-3s;}
-.blob:nth-child(3){width:300px;height:300px;background:var(--honey);top:50%;left:60%;animation-delay:-6s;}
-@keyframes blobFloat{
-  0%,100%{transform:translate(0,0) scale(1);}
-  33%{transform:translate(30px,-40px) scale(1.05);}
-  66%{transform:translate(-20px,30px) scale(.95);}
-}
-
-.hero-content{position:relative;z-index:3;max-width:900px;padding:0 20px;}
-
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:8px 20px;border-radius:50px;
-  background:rgba(255,110,180,.12);border:1px solid rgba(255,110,180,.3);
-  font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--candy-pink);
-  margin-bottom:28px;
-}
-.hero-badge::before{content:'✦';animation:spin 4s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-
-.hero-title{
-  font-family:'Syne',sans-serif;font-weight:800;
-  font-size:clamp(2.5rem,7vw,6rem);line-height:1.05;
-  letter-spacing:-.02em;margin-bottom:12px;
-}
-.hero-title .line1{
-  display:block;
-  background:linear-gradient(90deg,var(--candy-pink),#fff 40%,var(--honey));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.hero-title .line2{
-  display:block;
-  background:linear-gradient(90deg,var(--electric-blue),var(--acid-green));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-
-.hero-sub{
-  font-size:clamp(.95rem,2vw,1.2rem);color:rgba(255,255,255,.6);
-  margin-bottom:44px;font-weight:300;letter-spacing:.03em;
-}
-
-.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
-
-.btn-primary{
-  padding:16px 40px;border-radius:50px;
-  background:linear-gradient(135deg,var(--candy-pink),var(--electric-violet));
-  border:none;color:#fff;font-family:'Syne',sans-serif;font-weight:700;
-  font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;
-  cursor:pointer;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;
-  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
-}
-.btn-primary::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,var(--honey),var(--candy-pink));
-  opacity:0;transition:opacity .4s;
-}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(255,110,180,.4);}
-.btn-primary:hover::before{opacity:1;}
-.btn-primary span{position:relative;}
-
-.btn-secondary{
-  padding:16px 40px;border-radius:50px;
-  background:transparent;border:1px solid rgba(255,255,255,.25);
-  color:#fff;font-family:'Syne',sans-serif;font-weight:600;
-  font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;
-  cursor:pointer;transition:all .3s;text-decoration:none;
-  display:inline-flex;align-items:center;gap:8px;
-}
-.btn-secondary:hover{border-color:var(--candy-pink);color:var(--candy-pink);box-shadow:0 0 30px rgba(255,110,180,.2);}
-
-/* floating product images in hero */
-.hero-floaters{position:absolute;inset:0;pointer-events:none;}
-.floater{
-  position:absolute;width:120px;height:120px;
-  border-radius:24px;
-  background:var(--glass);border:1px solid var(--glass-border);
-  backdrop-filter:blur(20px);
-  display:flex;align-items:center;justify-content:center;
-  font-size:3rem;animation:floatEl 6s ease-in-out infinite;
-  box-shadow:0 20px 60px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.1);
-}
-.floater:nth-child(1){top:15%;left:5%;animation-delay:0s;}
-.floater:nth-child(2){top:20%;right:8%;animation-delay:-2s;width:100px;height:100px;}
-.floater:nth-child(3){bottom:20%;left:8%;animation-delay:-4s;width:90px;height:90px;}
-.floater:nth-child(4){bottom:25%;right:6%;animation-delay:-1s;width:110px;height:110px;}
-.floater:nth-child(5){top:50%;left:2%;animation-delay:-3s;width:80px;height:80px;}
-@keyframes floatEl{
-  0%,100%{transform:translateY(0) rotate(0deg);}
-  50%{transform:translateY(-20px) rotate(3deg);}
-}
-
-/* drip decoration */
-.drip-bar{
-  position:absolute;bottom:0;left:0;right:0;height:60px;z-index:4;
-  background:var(--bg-dark);
-  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60'%3E%3Cpath d='M0,0 L0,30 Q90,60 180,30 Q270,0 360,30 Q450,60 540,30 Q630,0 720,30 Q810,60 900,30 Q990,0 1080,30 Q1170,60 1260,30 Q1350,0 1440,30 L1440,0 Z'/%3E%3C/svg%3E") center/cover no-repeat;
-}
-
-/* ════════════════════════════════════
-   SECTION SHARED
-═══════════════════════════════════════ */
-section{position:relative;z-index:2;}
-.section-inner{max-width:1200px;margin:0 auto;padding:100px 40px;}
-
-.section-tag{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;
-  color:var(--candy-pink);margin-bottom:16px;
-  padding:6px 16px;border-radius:50px;
-  border:1px solid rgba(255,110,180,.25);
-}
-.section-title{
-  font-family:'Syne',sans-serif;font-weight:800;
-  font-size:clamp(2rem,5vw,3.5rem);line-height:1.1;margin-bottom:16px;
-  letter-spacing:-.02em;
-}
-.section-title em{
-  font-style:normal;
-  background:linear-gradient(90deg,var(--candy-pink),var(--honey));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.section-sub{color:rgba(255,255,255,.5);font-size:1rem;max-width:500px;}
-
-/* ════════════════════════════════════
-   STATS STRIP
-═══════════════════════════════════════ */
-.stats-strip{
-  background:linear-gradient(90deg,rgba(255,110,180,.08),rgba(124,58,237,.08),rgba(255,110,180,.08));
-  border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);
-  padding:40px 0;
-}
-.stats-grid{
-  max-width:1200px;margin:0 auto;padding:0 40px;
-  display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;
-}
-.stat-num{
-  font-family:'Syne',sans-serif;font-weight:800;font-size:2.5rem;
-  background:linear-gradient(90deg,var(--candy-pink),var(--honey));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.stat-label{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:4px;}
-
-/* ════════════════════════════════════
-   PRODUCT CARDS
-═══════════════════════════════════════ */
-.products-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;margin-top:60px;
-}
-
-.product-card{
-  position:relative;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:28px;overflow:hidden;
-  transition:transform .4s,border-color .4s,box-shadow .4s;
-  cursor:pointer;
-}
-.product-card::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,110,180,.1),rgba(124,58,237,.1));
-  opacity:0;transition:opacity .4s;border-radius:28px;
-}
-.product-card:hover{
-  transform:translateY(-12px) rotateX(2deg);
-  border-color:rgba(255,110,180,.3);
-  box-shadow:0 30px 80px rgba(255,110,180,.2),0 0 0 1px rgba(255,110,180,.1),inset 0 1px 0 rgba(255,255,255,.1);
-}
-.product-card:hover::before{opacity:1;}
-
-.card-img{
-  height:220px;display:flex;align-items:center;justify-content:center;
-  font-size:5rem;position:relative;overflow:hidden;
-  background:linear-gradient(135deg,rgba(255,110,180,.08),rgba(124,58,237,.12));
-}
-.card-img-glow{
-  position:absolute;inset:0;opacity:0;transition:opacity .4s;
-}
-.product-card:hover .card-img-glow{opacity:1;}
-
-.card-badge{
-  position:absolute;top:16px;left:16px;
-  padding:5px 14px;border-radius:50px;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
-  font-weight:700;
-}
-.badge-hybrid{background:rgba(245,158,11,.2);color:var(--honey);border:1px solid rgba(245,158,11,.3);}
-.badge-indica{background:rgba(124,58,237,.2);color:#a78bfa;border:1px solid rgba(124,58,237,.3);}
-.badge-sativa{background:rgba(57,255,20,.15);color:var(--acid-green);border:1px solid rgba(57,255,20,.25);}
-
-.card-body{padding:22px 22px 24px;}
-.card-type{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--candy-pink);margin-bottom:6px;}
-.card-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1.2rem;margin-bottom:8px;}
-.card-flavor{font-size:.8rem;color:rgba(255,255,255,.4);margin-bottom:12px;font-style:italic;}
-.card-desc{font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:20px;}
-
-.card-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.card-price{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;
-  background:linear-gradient(90deg,var(--honey),var(--candy-pink));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.card-price small{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);display:block;font-weight:400;-webkit-text-fill-color:rgba(255,255,255,.3);}
-
-.add-cart-btn{
-  flex-shrink:0;padding:12px 22px;border-radius:50px;
-  background:linear-gradient(135deg,var(--candy-pink),var(--electric-violet));
-  border:none;color:#fff;font-family:'Syne',sans-serif;font-weight:700;
-  font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;
-  cursor:pointer;transition:all .3s;white-space:nowrap;
-}
-.add-cart-btn:hover{transform:scale(1.05);box-shadow:0 10px 30px rgba(255,110,180,.4);}
-.add-cart-btn:active{transform:scale(.97);}
-
-/* ════════════════════════════════════
-   FLAVORS WALL
-═══════════════════════════════════════ */
-.flavors-section{background:rgba(255,255,255,.015);}
-
-.flavors-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:60px;
-}
-.flavor-card{
-  padding:28px 20px;border-radius:24px;text-align:center;
-  position:relative;overflow:hidden;cursor:default;
-  transition:transform .4s,box-shadow .4s;
-  border:1px solid transparent;
-}
-.flavor-card:hover{transform:translateY(-8px) scale(1.03);}
-.flavor-card::before{
-  content:'';position:absolute;inset:0;border-radius:24px;
-  opacity:.15;transition:opacity .3s;
-}
-.flavor-card:hover::before{opacity:.25;}
-
-/* per-flavor colors */
-.fc-1{background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(251,191,36,.08));border-color:rgba(245,158,11,.2);}
-.fc-1::before{background:linear-gradient(135deg,#f59e0b,#fbbf24);}
-.fc-1:hover{box-shadow:0 20px 50px rgba(245,158,11,.25);}
-
-.fc-2{background:linear-gradient(135deg,rgba(255,110,180,.12),rgba(236,72,153,.08));border-color:rgba(255,110,180,.2);}
-.fc-2::before{background:linear-gradient(135deg,#ff6eb4,#ec4899);}
-.fc-2:hover{box-shadow:0 20px 50px rgba(255,110,180,.25);}
-
-.fc-3{background:linear-gradient(135deg,rgba(57,255,20,.1),rgba(16,185,129,.08));border-color:rgba(57,255,20,.2);}
-.fc-3::before{background:linear-gradient(135deg,#39ff14,#10b981);}
-.fc-3:hover{box-shadow:0 20px 50px rgba(57,255,20,.2);}
-
-.fc-4{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(57,255,20,.08));border-color:rgba(245,158,11,.15);}
-.fc-4::before{background:linear-gradient(135deg,#f59e0b,#39ff14);}
-.fc-4:hover{box-shadow:0 20px 50px rgba(245,158,11,.2);}
-
-.fc-5{background:linear-gradient(135deg,rgba(255,110,180,.12),rgba(251,191,36,.08));border-color:rgba(255,110,180,.2);}
-.fc-5::before{background:linear-gradient(135deg,#ff6eb4,#fbbf24);}
-.fc-5:hover{box-shadow:0 20px 50px rgba(255,110,180,.25);}
-
-.fc-6{background:linear-gradient(135deg,rgba(239,68,68,.12),rgba(57,255,20,.08));border-color:rgba(239,68,68,.2);}
-.fc-6::before{background:linear-gradient(135deg,#ef4444,#39ff14);}
-.fc-6:hover{box-shadow:0 20px 50px rgba(239,68,68,.2);}
-
-.fc-7{background:linear-gradient(135deg,rgba(255,110,180,.15),rgba(251,113,133,.08));border-color:rgba(255,110,180,.25);}
-.fc-7::before{background:linear-gradient(135deg,#ff6eb4,#fb7185);}
-.fc-7:hover{box-shadow:0 20px 50px rgba(255,110,180,.3);}
-
-.fc-8{background:linear-gradient(135deg,rgba(57,255,20,.12),rgba(245,158,11,.08));border-color:rgba(57,255,20,.2);}
-.fc-8::before{background:linear-gradient(135deg,#39ff14,#f59e0b);}
-.fc-8:hover{box-shadow:0 20px 50px rgba(57,255,20,.2);}
-
-.fc-9{background:linear-gradient(135deg,rgba(155,89,182,.15),rgba(255,110,180,.08));border-color:rgba(155,89,182,.25);}
-.fc-9::before{background:linear-gradient(135deg,#9b59b6,#ff6eb4);}
-.fc-9:hover{box-shadow:0 20px 50px rgba(155,89,182,.25);}
-
-.fc-10{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(124,58,237,.1));border-color:rgba(59,130,246,.2);}
-.fc-10::before{background:linear-gradient(135deg,#3b82f6,#7c3aed);}
-.fc-10:hover{box-shadow:0 20px 50px rgba(59,130,246,.25);}
-
-.flavor-emoji{font-size:2.8rem;display:block;margin-bottom:12px;}
-.flavor-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:6px;}
-.flavor-type{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);}
-
-/* ════════════════════════════════════
-   REVIEWS
-═══════════════════════════════════════ */
-.reviews-section{overflow:hidden;}
-.reviews-ticker{
-  display:flex;gap:20px;width:max-content;
-  animation:ticker 40s linear infinite;margin-top:60px;
-}
-.reviews-ticker:hover{animation-play-state:paused;}
-@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);};}
-
-.review-card{
-  flex-shrink:0;width:320px;
-  background:var(--glass);border:1px solid var(--glass-border);
-  border-radius:24px;padding:28px;
-  backdrop-filter:blur(20px);
-}
-.review-stars{color:var(--honey);font-size:1rem;margin-bottom:12px;letter-spacing:2px;}
-.review-text{font-size:.88rem;color:rgba(255,255,255,.7);line-height:1.6;margin-bottom:18px;}
-.reviewer{display:flex;align-items:center;gap:12px;}
-.reviewer-avatar{
-  width:40px;height:40px;border-radius:50%;
-  background:linear-gradient(135deg,var(--candy-pink),var(--electric-violet));
-  display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;
-  font-family:'Syne',sans-serif;
-}
-.reviewer-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;}
-.reviewer-location{font-size:.7rem;color:rgba(255,255,255,.4);}
-
-/* ════════════════════════════════════
-   COMMUNITY
-═══════════════════════════════════════ */
-.community-section{
-  background:linear-gradient(135deg,rgba(255,110,180,.05),rgba(124,58,237,.05));
-  border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);
-}
-.social-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:60px;
-}
-.social-post{
-  aspect-ratio:1;border-radius:20px;overflow:hidden;position:relative;cursor:pointer;
-  background:rgba(255,255,255,.04);border:1px solid var(--glass-border);
-  display:flex;align-items:center;justify-content:center;font-size:3rem;
-  transition:transform .3s;
-}
-.social-post:hover{transform:scale(1.05);}
-.social-post-overlay{
-  position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.7),transparent);
-  opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:16px;
-}
-.social-post:hover .social-post-overlay{opacity:1;}
-.social-post-overlay span{font-size:.7rem;letter-spacing:.1em;}
-
-.social-links{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap;}
-.social-link-btn{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:14px 28px;border-radius:50px;
-  border:1px solid var(--glass-border);background:var(--glass);
-  color:#fff;text-decoration:none;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;
-  transition:all .3s;font-family:'Syne',sans-serif;font-weight:600;
-}
-.social-link-btn:hover{border-color:var(--candy-pink);box-shadow:0 0 30px rgba(255,110,180,.2);}
-
-/* ════════════════════════════════════
-   CART DRAWER
-═══════════════════════════════════════ */
-.cart-overlay{
-  position:fixed;inset:0;z-index:2000;
-  background:rgba(0,0,0,.6);backdrop-filter:blur(8px);
-  opacity:0;pointer-events:none;transition:opacity .4s;
-}
-.cart-overlay.open{opacity:1;pointer-events:all;}
-
-.cart-drawer{
-  position:fixed;right:0;top:0;bottom:0;z-index:2001;
-  width:min(420px,95vw);
-  background:rgba(15,5,25,.95);border-left:1px solid var(--glass-border);
-  backdrop-filter:blur(30px);
-  transform:translateX(100%);transition:transform .4s cubic-bezier(.32,0,.15,1);
-  display:flex;flex-direction:column;
-}
-.cart-drawer.open{transform:translateX(0);}
-
-.cart-header{
-  padding:28px 28px 0;display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid var(--glass-border);padding-bottom:20px;
-}
-.cart-header h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;}
-.cart-close{
-  width:36px;height:36px;border-radius:50%;background:var(--glass);border:1px solid var(--glass-border);
-  color:#fff;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;
-  transition:all .3s;
-}
-.cart-close:hover{background:var(--candy-pink);border-color:var(--candy-pink);}
-
-.cart-items{flex:1;overflow-y:auto;padding:20px 28px;display:flex;flex-direction:column;gap:16px;}
-.cart-item{
-  display:flex;gap:14px;align-items:center;
-  padding:16px;border-radius:20px;background:var(--glass);border:1px solid var(--glass-border);
-}
-.cart-item-icon{width:52px;height:52px;border-radius:14px;
-  background:linear-gradient(135deg,rgba(255,110,180,.2),rgba(124,58,237,.2));
-  display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;}
-.cart-item-info{flex:1;}
-.cart-item-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:2px;}
-.cart-item-flavor{font-size:.72rem;color:rgba(255,255,255,.4);}
-.cart-item-price{font-family:'Syne',sans-serif;font-weight:800;color:var(--honey);}
-.cart-item-remove{background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:1.1rem;transition:color .3s;padding:4px;}
-.cart-item-remove:hover{color:var(--candy-pink);}
-
-.cart-empty{text-align:center;padding:60px 20px;color:rgba(255,255,255,.3);font-size:2rem;}
-.cart-empty p{font-size:.85rem;margin-top:12px;letter-spacing:.1em;}
-
-.cart-footer{
-  padding:20px 28px 28px;border-top:1px solid var(--glass-border);
-}
-.cart-total{
-  display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;
-}
-.cart-total-label{color:rgba(255,255,255,.5);font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;}
-.cart-total-price{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;
-  background:linear-gradient(90deg,var(--honey),var(--candy-pink));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.checkout-btn{
-  width:100%;padding:18px;border-radius:16px;
-  background:linear-gradient(135deg,var(--candy-pink),var(--electric-violet));
-  border:none;color:#fff;font-family:'Syne',sans-serif;font-weight:800;
-  font-size:.9rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
-  transition:all .3s;position:relative;overflow:hidden;
-}
-.checkout-btn:hover{box-shadow:0 15px 40px rgba(255,110,180,.4);transform:translateY(-2px);}
-
-/* ════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════ */
-footer{
-  background:rgba(0,0,0,.5);border-top:1px solid var(--glass-border);
-  position:relative;z-index:2;
-}
-.footer-inner{
-  max-width:1200px;margin:0 auto;padding:80px 40px 40px;
-  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;
-}
-.footer-brand .logo{font-size:1.4rem;}
-.footer-brand p{font-size:.85rem;color:rgba(255,255,255,.4);line-height:1.7;margin-top:16px;max-width:280px;}
-.footer-social{display:flex;gap:12px;margin-top:24px;}
-.fsocial{
-  width:38px;height:38px;border-radius:50%;
-  background:var(--glass);border:1px solid var(--glass-border);
-  display:flex;align-items:center;justify-content:center;font-size:1rem;
-  transition:all .3s;cursor:pointer;color:#fff;text-decoration:none;
-}
-.fsocial:hover{background:var(--candy-pink);border-color:var(--candy-pink);transform:translateY(-3px);}
-
-.footer-col h4{font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:20px;color:rgba(255,255,255,.6);}
-.footer-col a{display:block;font-size:.82rem;color:rgba(255,255,255,.4);text-decoration:none;margin-bottom:10px;transition:color .3s;}
-.footer-col a:hover{color:var(--candy-pink);}
-
-.newsletter{margin-top:24px;}
-.newsletter p{font-size:.8rem;color:rgba(255,255,255,.4);margin-bottom:14px;}
-.newsletter-form{display:flex;gap:8px;}
-.newsletter-input{
-  flex:1;padding:12px 16px;border-radius:12px;
-  background:var(--glass);border:1px solid var(--glass-border);
-  color:#fff;font-size:.82rem;outline:none;
-}
-.newsletter-input::placeholder{color:rgba(255,255,255,.3);}
-.newsletter-input:focus{border-color:var(--candy-pink);}
-.newsletter-submit{
-  padding:12px 16px;border-radius:12px;
-  background:linear-gradient(135deg,var(--candy-pink),var(--electric-violet));
-  border:none;color:#fff;cursor:pointer;font-size:.82rem;font-weight:700;white-space:nowrap;transition:all .3s;
-}
-.newsletter-submit:hover{box-shadow:0 8px 24px rgba(255,110,180,.3);}
-
-.footer-bottom{
-  max-width:1200px;margin:0 auto;padding:24px 40px;
-  border-top:1px solid var(--glass-border);
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:.72rem;color:rgba(255,255,255,.25);
-}
-
-/* ════════════════════════════════════
-   NEON GLOW DIVIDER
-═══════════════════════════════════════ */
-.neon-divider{
-  height:2px;
-  background:linear-gradient(90deg,transparent,var(--candy-pink),var(--honey),var(--electric-blue),transparent);
-  box-shadow:0 0 20px var(--candy-pink);
-  position:relative;z-index:2;
-}
-
-/* ════════════════════════════════════
-   TOAST NOTIFICATION
-═══════════════════════════════════════ */
-.toast{
-  position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);
-  background:linear-gradient(135deg,var(--candy-pink),var(--electric-violet));
-  color:#fff;padding:14px 28px;border-radius:50px;font-family:'Syne',sans-serif;
-  font-weight:700;font-size:.85rem;letter-spacing:.08em;z-index:5000;
-  transition:transform .4s cubic-bezier(.32,0,.15,1);pointer-events:none;
-  box-shadow:0 20px 50px rgba(255,110,180,.4);
-}
-.toast.show{transform:translateX(-50%) translateY(0);}
-
-/* ════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════ */
-@media(max-width:900px){
-  nav{display:none;}
-  .hamburger{display:flex;}
-  .stats-grid{grid-template-columns:repeat(2,1fr);}
-  .footer-inner{grid-template-columns:1fr 1fr;gap:40px;}
-}
-@media(max-width:600px){
-  .section-inner{padding:80px 20px;}
-  header{padding:0 20px;}
-  .stats-grid{grid-template-columns:repeat(2,1fr);gap:16px;}
-  .footer-inner{grid-template-columns:1fr;gap:32px;}
-  .footer-bottom{flex-direction:column;gap:8px;text-align:center;}
-  .floater{display:none;}
-  #skip-btn{bottom:20px;right:20px;}
-}
-
-/* ════════════════════════════════════
-   SCROLL REVEAL
-═══════════════════════════════════════ */
-.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease;}
-.reveal.visible{opacity:1;transform:none;}
-.reveal-delay-1{transition-delay:.1s;}
-.reveal-delay-2{transition-delay:.2s;}
-.reveal-delay-3{transition-delay:.3s;}
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --pink: #ff6eb4;
+    --violet: #b060ff;
+    --yellow: #ffe048;
+    --blue: #60d0ff;
+    --mint: #7dffc4;
+    --cream: #fff8f0;
+    --dark: #0a0510;
+    --gold: #e8c840;
+    --green: #1a7a3c;
+    --green-bright: #2ecc71;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--pink);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-trail {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--violet);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99998;
+    transition: all 0.25s ease;
+    mix-blend-mode: difference;
+  }
+
+  /* INTRO VIDEO */
+  #intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #intro-video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  #intro-overlay.fade-out {
+    animation: introFade 1.2s ease forwards;
+  }
+  @keyframes introFade {
+    to { opacity: 0; pointer-events: none; }
+  }
+  .skip-btn {
+    position: absolute;
+    bottom: 48px; right: 48px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s;
+    border-radius: 2px;
+  }
+  .skip-btn:hover { background: rgba(255,255,255,0.25); }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(10,5,16,0.9), transparent);
+    backdrop-filter: blur(2px);
+  }
+  .nav-logo img {
+    height: 52px;
+    filter: drop-shadow(0 0 16px rgba(46,204,113,0.6));
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--pink); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--pink), var(--violet));
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.3s;
+    box-shadow: 0 0 24px rgba(255,110,180,0.4);
+  }
+  .nav-cta:hover { box-shadow: 0 0 40px rgba(255,110,180,0.7); transform: translateY(-1px); }
+
+  /* ANIMATED BG CANVAS */
+  #bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.45;
+  }
+
+  /* HERO */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 1;
+    padding: 120px 48px 80px;
+  }
+
+  .hero-bg-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 70% at 50% 60%, rgba(176,96,255,0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 50% at 20% 30%, rgba(255,110,180,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 80% 70%, rgba(96,208,255,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    z-index: 2;
+    max-width: 1100px;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 24px;
+    font-weight: 400;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 12vw, 180px);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .hero-title .line1 {
+    display: block;
+    background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-title .line2 {
+    display: block;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--violet) 50%, var(--blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 40px rgba(255,110,180,0.5));
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    max-width: 480px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--pink), var(--violet));
+    color: #fff;
+    padding: 18px 48px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    box-shadow: 0 0 40px rgba(255,110,180,0.5), 0 20px 60px rgba(0,0,0,0.4);
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+  }
+  .btn-primary:hover::before { transform: translateX(100%); }
+  .btn-primary:hover {
+    box-shadow: 0 0 80px rgba(255,110,180,0.7), 0 20px 60px rgba(0,0,0,0.4);
+    transform: translateY(-3px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: #fff;
+    padding: 18px 48px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.25);
+    cursor: pointer;
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    backdrop-filter: blur(8px);
+    transition: all 0.4s;
+  }
+  .btn-outline:hover {
+    border-color: var(--violet);
+    color: var(--violet);
+    box-shadow: 0 0 30px rgba(176,96,255,0.3);
+  }
+
+  /* FLOATING PRODUCT */
+  .hero-products {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .float-product {
+    position: absolute;
+    border-radius: 50%;
+    overflow: hidden;
+    animation: floatOrb 6s ease-in-out infinite;
+  }
+
+  .float-product.p1 {
+    width: 280px; height: 280px;
+    left: 5%; top: 15%;
+    animation-delay: 0s;
+    background: radial-gradient(circle, rgba(255,110,180,0.2), rgba(176,96,255,0.1));
+    border: 1px solid rgba(255,110,180,0.2);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 60px rgba(255,110,180,0.15), inset 0 0 40px rgba(255,110,180,0.1);
+  }
+
+  .float-product.p2 {
+    width: 220px; height: 220px;
+    right: 6%; top: 20%;
+    animation-delay: -2s;
+    background: radial-gradient(circle, rgba(96,208,255,0.2), rgba(176,96,255,0.1));
+    border: 1px solid rgba(96,208,255,0.2);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 60px rgba(96,208,255,0.15), inset 0 0 40px rgba(96,208,255,0.1);
+  }
+
+  .float-product.p3 {
+    width: 160px; height: 160px;
+    left: 15%; bottom: 20%;
+    animation-delay: -4s;
+    background: radial-gradient(circle, rgba(232,200,64,0.2), rgba(255,110,180,0.1));
+    border: 1px solid rgba(232,200,64,0.2);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 40px rgba(232,200,64,0.15);
+  }
+
+  .float-product img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+  }
+
+  @keyframes floatOrb {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33% { transform: translateY(-20px) rotate(2deg); }
+    66% { transform: translateY(10px) rotate(-1deg); }
+  }
+
+  /* SECTION COMMON */
+  section {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-tag {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 100px);
+    line-height: 0.95;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  .section-subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.5);
+    max-width: 500px;
+    line-height: 1.7;
+  }
+
+  .section-header {
+    margin-bottom: 64px;
+  }
+
+  /* DIVIDER */
+  .candy-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--pink), var(--violet), var(--blue), transparent);
+    margin: 0;
+    box-shadow: 0 0 20px rgba(255,110,180,0.5);
+  }
+
+  /* PUFFS SECTION */
+  #puffs {
+    padding: 120px 48px;
+    background: linear-gradient(180deg, transparent 0%, rgba(176,96,255,0.05) 50%, transparent 100%);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .product-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+  .product-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    border-color: rgba(255,110,180,0.3);
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 60px rgba(255,110,180,0.2);
+  }
+
+  .product-card-img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+    filter: brightness(0.95) saturate(1.1);
+  }
+
+  .product-card:hover .product-card-img {
+    transform: scale(1.06);
+  }
+
+  .product-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,5,16,0.95) 0%, rgba(10,5,16,0.4) 50%, transparent 100%);
+  }
+
+  .product-card-glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.4s;
+    border-radius: 20px;
+  }
+
+  .product-card:nth-child(1) .product-card-glow { background: radial-gradient(ellipse at center, rgba(255,110,180,0.15), transparent 70%); }
+  .product-card:nth-child(2) .product-card-glow { background: radial-gradient(ellipse at center, rgba(176,96,255,0.15), transparent 70%); }
+  .product-card:nth-child(3) .product-card-glow { background: radial-gradient(ellipse at center, rgba(96,208,255,0.15), transparent 70%); }
+
+  .product-card:hover .product-card-glow { opacity: 1; }
+
+  .product-card-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 28px;
+  }
+
+  .product-type-badge {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .badge-indica { background: rgba(176,96,255,0.2); color: var(--violet); border: 1px solid rgba(176,96,255,0.3); }
+  .badge-hybrid { background: rgba(255,110,180,0.2); color: var(--pink); border: 1px solid rgba(255,110,180,0.3); }
+  .badge-sativa { background: rgba(96,208,255,0.2); color: var(--blue); border: 1px solid rgba(96,208,255,0.3); }
+
+  .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .product-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .product-flavors {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .flavor-tag {
+    font-size: 10px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.5px;
+  }
+
+  .product-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: var(--yellow);
+  }
+
+  .product-card-btn {
+    position: absolute;
+    top: 20px; right: 20px;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s;
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  .product-card:hover .product-card-btn {
+    opacity: 1;
+    transform: scale(1);
+    background: linear-gradient(135deg, var(--pink), var(--violet));
+  }
+
+  /* JARS SECTION */
+  #jars {
+    padding: 120px 48px;
+    background: linear-gradient(180deg, transparent 0%, rgba(96,208,255,0.04) 50%, transparent 100%);
+  }
+
+  .jars-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .jar-hero-card {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.5s;
+  }
+
+  .jar-hero-card:hover { transform: scale(1.02); }
+
+  .jar-hero-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9) saturate(1.15);
+  }
+
+  .jar-hero-card .product-card-overlay {
+    background: linear-gradient(to top, rgba(10,5,16,0.92) 0%, rgba(10,5,16,0.2) 60%, transparent 100%);
+  }
+
+  .jar-hero-info {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    padding: 36px;
+  }
+
+  .jar-small-card {
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.5s;
+    height: 280px;
+  }
+
+  .jar-small-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+
+  .jar-small-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9) saturate(1.1);
+  }
+
+  /* FLAVORS */
+  #saveurs {
+    padding: 120px 48px;
+    overflow: hidden;
+  }
+
+  .flavors-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .flavors-scroll::-webkit-scrollbar { display: none; }
+
+  .flavor-card {
+    flex: 0 0 220px;
+    height: 320px;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 28px 20px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s;
+    scroll-snap-align: start;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .flavor-card:hover { transform: translateY(-10px) scale(1.03); }
+
+  .flavor-card-bg {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.6s ease;
+  }
+
+  .flavor-card:hover .flavor-card-bg { transform: scale(1.1); }
+
+  .flavor-icon {
+    font-size: 56px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
+    transition: transform 0.4s;
+  }
+
+  .flavor-card:hover .flavor-icon { transform: translate(-50%, -80%) scale(1.15); }
+
+  .flavor-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .flavor-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Flavor card gradients */
+  .fc1 .flavor-card-bg { background: linear-gradient(160deg, #1a0a2e, #4a1060, #ff69b4); }
+  .fc2 .flavor-card-bg { background: linear-gradient(160deg, #0a1a2e, #1060a0, #60d0ff); }
+  .fc3 .flavor-card-bg { background: linear-gradient(160deg, #1a2a0a, #306020, #90ee40); }
+  .fc4 .flavor-card-bg { background: linear-gradient(160deg, #2a1a00, #806010, #ffe048); }
+  .fc5 .flavor-card-bg { background: linear-gradient(160deg, #2a000a, #a01030, #ff4060); }
+  .fc6 .flavor-card-bg { background: linear-gradient(160deg, #0a2a1a, #104a30, #7dffc4); }
+  .fc7 .flavor-card-bg { background: linear-gradient(160deg, #1a0a2a, #601090, #b060ff); }
+  .fc8 .flavor-card-bg { background: linear-gradient(160deg, #2a1000, #904020, #ff8040); }
+
+  /* REVIEWS */
+  #avis {
+    padding: 120px 48px;
+    background: linear-gradient(180deg, transparent, rgba(255,110,180,0.04), transparent);
+  }
+
+  .reviews-scroll {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+  }
+  .reviews-scroll::-webkit-scrollbar { display: none; }
+
+  .review-card {
+    flex: 0 0 360px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 32px;
+    backdrop-filter: blur(12px);
+    scroll-snap-align: start;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .review-card::before {
+    content: '"';
+    position: absolute;
+    top: -20px; right: 24px;
+    font-family: 'Playfair Display', serif;
+    font-size: 140px;
+    color: rgba(255,110,180,0.08);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .review-card:hover {
+    border-color: rgba(255,110,180,0.25);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.3), 0 0 40px rgba(255,110,180,0.1);
+  }
+
+  .review-stars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+  }
+
+  .star { color: var(--yellow); font-size: 16px; }
+
+  .review-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .review-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink), var(--violet));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .review-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  .review-location {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.5px;
+  }
+
+  .review-verified {
+    margin-left: auto;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--mint);
+    opacity: 0.8;
+  }
+
+  /* COMMUNITY */
+  #community {
+    padding: 120px 48px;
+  }
+
+  .community-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    gap: 16px;
+  }
+
+  .community-item {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    aspect-ratio: 1;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.4s;
+  }
+
+  .community-item:hover { transform: scale(1.03); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+
+  .community-item.large { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; min-height: 400px; }
+
+  .community-item-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .community-bg {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    filter: brightness(0.85) saturate(1.2);
+  }
+
+  .community-item:hover .community-bg { transform: scale(1.1); }
+
+  .community-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,5,16,0.8), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+  }
+
+  .community-item:hover .community-overlay { opacity: 1; }
+
+  .community-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+  }
+
+  .comm-gradient-1 { background: linear-gradient(135deg, #1a0a30, #4a1060, #ff69b4, #8040a0); }
+  .comm-gradient-2 { background: linear-gradient(135deg, #0a1a30, #104080, #60d0ff); }
+  .comm-gradient-3 { background: linear-gradient(135deg, #1a2000, #304010, #90ee40); }
+  .comm-gradient-4 { background: linear-gradient(135deg, #2a0010, #801040, #ff4080); }
+  .comm-gradient-5 { background: linear-gradient(135deg, #0a2010, #204010, #7dffc4); }
+  .comm-gradient-6 { background: linear-gradient(135deg, #1a1000, #504010, #ffe048); }
+
+  .insta-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 500;
+  }
+
+  .insta-icon {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 80px 48px 40px;
+    background: linear-gradient(to top, rgba(176,96,255,0.06), transparent);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+  }
+
+  .footer-brand img { height: 60px; margin-bottom: 20px; filter: drop-shadow(0 0 12px rgba(46,204,113,0.4)); }
+
+  .footer-tagline {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.7;
+    max-width: 260px;
+    margin-bottom: 28px;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 12px;
+  }
+
+  .social-btn {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .social-btn:hover { border-color: var(--pink); background: rgba(255,110,180,0.1); transform: translateY(-3px); }
+
+  .footer-col h4 {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 12px; }
+  .footer-col ul li a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.3s;
+  }
+  .footer-col ul li a:hover { color: var(--pink); }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.5px;
+  }
+
+  .footer-legal {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-legal a {
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-legal a:hover { color: rgba(255,255,255,0.5); }
+
+  .age-badge {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* HONEY DRIP DECORATION */
+  .honey-divider {
+    position: relative;
+    height: 80px;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .honey-drip {
+    position: absolute;
+    top: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--yellow), rgba(232,200,64,0));
+    border-radius: 0 0 100px 100px;
+    animation: drip 3s ease-in-out infinite;
+  }
+
+  @keyframes drip {
+    0% { height: 20px; opacity: 0.6; }
+    50% { height: 60px; opacity: 1; }
+    100% { height: 20px; opacity: 0.6; }
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    padding: 40px 48px;
+    background: rgba(255,255,255,0.02);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 24px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stat-item { text-align: center; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--yellow), var(--pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 50px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* NEON TEXT */
+  .neon-text {
+    text-shadow: 0 0 20px rgba(255,110,180,0.8), 0 0 40px rgba(255,110,180,0.4), 0 0 80px rgba(176,96,255,0.3);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+
+    #hero { padding: 100px 24px 60px; }
+    .hero-title { font-size: clamp(60px, 16vw, 100px); }
+
+    .products-grid { grid-template-columns: 1fr; }
+    .jars-layout { grid-template-columns: 1fr; }
+    .jar-hero-card { grid-column: 1; grid-row: auto; height: 420px; }
+
+    #puffs, #jars, #saveurs, #avis, #community { padding: 80px 24px; }
+
+    .community-grid { grid-template-columns: repeat(2, 1fr); }
+    .community-item.large { grid-column: span 2; min-height: 280px; }
+
+    .footer-top { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 60px 24px 32px; }
+    .stats-bar { padding: 32px 24px; }
+
+    .skip-btn { bottom: 24px; right: 24px; padding: 12px 24px; }
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; height: 40px; }
+    50% { opacity: 1; height: 60px; }
+  }
+
+  .scroll-text {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  /* GLITCH LOGO */
+  .glitch-logo {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* PRODUCT IMAGE PLACEHOLDER STYLED */
+  .prod-img-placeholder {
+    width: 100%;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .marquee-strip {
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 20px 0;
+    background: rgba(255,255,255,0.02);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    position: relative;
+    z-index: 1;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 20s linear infinite;
+  }
+
+  .marquee-item {
+    display: inline-block;
+    margin: 0 40px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+  }
+
+  .marquee-dot {
+    display: inline-block;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--pink);
+    vertical-align: middle;
+    margin: 0 20px;
+    opacity: 0.5;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* 18+ DISCLAIMER */
+  .disclaimer-banner {
+    background: rgba(255,255,255,0.03);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 12px 48px;
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* PRODUCT IMAGE FROM UPLOAD */
+  .prod-real-img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+  }
+
 </style>
 </head>
 <body>
 
 <!-- CURSOR -->
 <div class="cursor" id="cursor"></div>
-<div class="cursor-trail" id="cursor-trail"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
 
-<!-- PARTICLES -->
-<canvas id="particles-canvas"></canvas>
+<!-- ANIMATED BG -->
+<canvas id="bg-canvas"></canvas>
 
-<!-- ════ INTRO ════ -->
-<div id="intro">
+<!-- INTRO VIDEO -->
+<div id="intro-overlay">
   <video id="intro-video" autoplay muted playsinline>
-    <source src="5631230499503135330.mp4" type="video/mp4">
+    <source src="5631230499503135330_V1.mp4" type="video/mp4">
   </video>
-  <button id="skip-btn">Skip Intro ›</button>
+  <button class="skip-btn" onclick="skipIntro()">Skip Intro →</button>
 </div>
 
-<!-- ════ MOBILE MENU ════ -->
-<div class="mobile-menu" id="mobile-menu">
-  <a href="#home" onclick="closeMobile()">Accueil</a>
-  <a href="#puffs" onclick="closeMobile()">Puffs</a>
-  <a href="#jars" onclick="closeMobile()">Jars</a>
-  <a href="#flavors" onclick="closeMobile()">Saveurs</a>
-  <a href="#reviews" onclick="closeMobile()">Avis</a>
-  <a href="#contact" onclick="closeMobile()">Contact</a>
-</div>
-
-<!-- ════ HEADER ════ -->
-<header id="header">
-  <div class="logo">WHOLE MELT<span>Extracts Premium</span></div>
-  <nav>
-    <a href="#home">Accueil</a>
-    <a href="#puffs">Puffs</a>
-    <a href="#jars">Jars</a>
-    <a href="#flavors">Saveurs</a>
-    <a href="#reviews">Avis clients</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <button class="cart-btn" id="cart-open-btn" aria-label="Panier">
-      🛒
-      <span class="cart-count" id="cart-count">0</span>
-    </button>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-logo">
+    <img src="IMG_0576.png" alt="Whole Melt Extracts">
   </div>
-</header>
+  <ul class="nav-links">
+    <li><a href="#puffs">Puffs</a></li>
+    <li><a href="#jars">Jars</a></li>
+    <li><a href="#saveurs">Saveurs</a></li>
+    <li><a href="#avis">Avis</a></li>
+    <li><a href="#community">Communauté</a></li>
+  </ul>
+  <button class="nav-cta">Commander</button>
+</nav>
 
-<!-- ════ HERO ════ -->
-<section class="hero" id="home">
-  <div class="hero-bg">
-    <div class="blob"></div>
-    <div class="blob"></div>
-    <div class="blob"></div>
-  </div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-glow"></div>
 
-  <div class="hero-floaters">
-    <div class="floater" style="--delay:0s;">🍯</div>
-    <div class="floater" style="--delay:-2s;">💨</div>
-    <div class="floater" style="--delay:-4s;">🍬</div>
-    <div class="floater" style="--delay:-1s;">🧋</div>
-    <div class="floater" style="--delay:-3s;">🌸</div>
+  <div class="hero-products" aria-hidden="true">
+    <div class="float-product p1">
+      <img src="IMG_0576.png" alt="" style="opacity:0.2; filter:blur(2px);">
+    </div>
+    <div class="float-product p2"></div>
+    <div class="float-product p3"></div>
   </div>
 
   <div class="hero-content">
-    <div class="hero-badge">✦ Premium Cannabis Extract ✦</div>
+    <div class="hero-eyebrow">California's Finest — Depuis 2020</div>
     <h1 class="hero-title">
-      <span class="line1">THE SWEETEST</span>
-      <span class="line2">CLOUD EXPERIENCE</span>
+      <span class="line1">Whole Melt</span>
+      <span class="line2">Extracts</span>
     </h1>
-    <p class="hero-sub">Des saveurs uniques. Une qualité absolue. L'extrait premium qui redéfinit l'expérience.</p>
+    <p class="hero-sub">L'expérience premium ultime. Des puffs et des jars d'une pureté absolue, nés de la culture californienne du cannabis de luxe.</p>
     <div class="hero-btns">
-      <a href="#puffs" class="btn-primary"><span>✨ Acheter maintenant</span></a>
-      <a href="#flavors" class="btn-secondary">Explorer les saveurs →</a>
+      <button class="btn-primary" onclick="document.getElementById('puffs').scrollIntoView({behavior:'smooth'})">Découvrir les Puffs</button>
+      <button class="btn-outline" onclick="document.getElementById('jars').scrollIntoView({behavior:'smooth'})">Explorer les Jars</button>
     </div>
   </div>
-  <div class="drip-bar"></div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
 </section>
 
-<!-- ════ STATS ════ -->
-<div class="stats-strip" id="stats">
-  <div class="stats-grid">
-    <div>
-      <div class="stat-num" data-count="50000">0</div>
-      <div class="stat-label">Clients satisfaits</div>
-    </div>
-    <div>
-      <div class="stat-num" data-count="10">0</div>
-      <div class="stat-label">Saveurs premium</div>
-    </div>
-    <div>
-      <div class="stat-num" data-count="98">0</div>
-      <div class="stat-label">% Avis positifs</div>
-    </div>
-    <div>
-      <div class="stat-num" data-count="120000">0</div>
-      <div class="stat-label">Commandes traitées</div>
-    </div>
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-item">Premium California Extract</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Honey Banana</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Acai Mints</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Bubblegum Kush</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Tropical Lemon Haze</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Live Resin Quality</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Full Spectrum</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Premium California Extract</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Honey Banana</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Acai Mints</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Bubblegum Kush</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Tropical Lemon Haze</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Live Resin Quality</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Full Spectrum</span><span class="marquee-dot"></span>
   </div>
 </div>
 
-<div class="neon-divider"></div>
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">50K+</div>
+    <div class="stat-label">Clients Satisfaits</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <div class="stat-num">30+</div>
+    <div class="stat-label">Saveurs Exclusives</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <div class="stat-num">4.9★</div>
+    <div class="stat-label">Note Moyenne</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Premium Quality</div>
+  </div>
+</div>
 
-<!-- ════ PUFFS ════ -->
+<!-- PUFFS SECTION -->
 <section id="puffs">
-  <div class="section-inner">
-    <div class="reveal">
-      <div class="section-tag">💨 Collection</div>
-      <h2 class="section-title">Nos <em>Puffs</em> Premium</h2>
-      <p class="section-sub">Des puffs ultra-gourmandes conçues pour une expérience sensorielle incomparable.</p>
-    </div>
-    <div class="products-grid" id="puffs-grid"></div>
+  <div class="section-header reveal">
+    <div class="section-tag">Collection Exclusive</div>
+    <h2 class="section-title neon-text">NOS PUFFS</h2>
+    <p class="section-subtitle">Des puffs d'exception conçus pour une expérience sensorielle incomparable. Chaque bouffée, un voyage.</p>
   </div>
-</section>
 
-<div class="neon-divider"></div>
+  <div class="products-grid">
 
-<!-- ════ JARS ════ -->
-<section id="jars">
-  <div class="section-inner">
-    <div class="reveal">
-      <div class="section-tag">🫙 Collection</div>
-      <h2 class="section-title">Nos <em>Jars</em> d'Exception</h2>
-      <p class="section-sub">Des concentrés en jar d'une pureté cristalline, pour les connaisseurs exigeants.</p>
-    </div>
-    <div class="products-grid" id="jars-grid"></div>
-  </div>
-</section>
-
-<div class="neon-divider"></div>
-
-<!-- ════ FLAVORS ════ -->
-<section class="flavors-section" id="flavors">
-  <div class="section-inner">
-    <div class="reveal">
-      <div class="section-tag">🍬 Univers</div>
-      <h2 class="section-title">Le Mur des <em>Saveurs</em></h2>
-      <p class="section-sub">10 saveurs soigneusement sélectionnées pour satisfaire chaque envie.</p>
-    </div>
-    <div class="flavors-grid" id="flavors-grid"></div>
-  </div>
-</section>
-
-<div class="neon-divider"></div>
-
-<!-- ════ REVIEWS ════ -->
-<section class="reviews-section" id="reviews">
-  <div class="section-inner" style="overflow:visible;">
-    <div class="reveal">
-      <div class="section-tag">⭐ Communauté</div>
-      <h2 class="section-title">Ce que disent nos <em>Clients</em></h2>
-    </div>
-    <div style="overflow:hidden;margin:0 -40px;">
-      <div class="reviews-ticker" id="reviews-ticker"></div>
-    </div>
-  </div>
-</section>
-
-<div class="neon-divider"></div>
-
-<!-- ════ COMMUNITY ════ -->
-<section class="community-section" id="contact">
-  <div class="section-inner">
-    <div class="reveal">
-      <div class="section-tag">📱 Communauté</div>
-      <h2 class="section-title">Rejoins la <em>Famille</em> Whole Melt</h2>
-      <p class="section-sub">Des milliers de passionnés partagent leur expérience chaque jour.</p>
-    </div>
-    <div class="social-grid" id="social-grid"></div>
-    <div class="social-links" style="margin-top:40px;">
-      <a href="#" class="social-link-btn">📸 Instagram @wholemelt</a>
-      <a href="#" class="social-link-btn">🎵 TikTok @wholemeltextracts</a>
-      <a href="#" class="social-link-btn">💬 Contact us</a>
-    </div>
-  </div>
-</section>
-
-<!-- ════ FOOTER ════ -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="logo">WHOLE MELT<span>Extracts Premium</span></div>
-      <p>L'extrait premium qui redéfinit l'expérience. Des saveurs exceptionnelles pour des moments inoubliables.</p>
-      <div class="footer-social">
-        <a class="fsocial" href="#">📸</a>
-        <a class="fsocial" href="#">🎵</a>
-        <a class="fsocial" href="#">💬</a>
-        <a class="fsocial" href="#">🐦</a>
+    <!-- PUFF 1 -->
+    <div class="product-card reveal" style="transition-delay:0.1s">
+      <div style="position:relative; height:320px; overflow:hidden; background: linear-gradient(160deg, #1a0530, #3d1060, #ff69b4);">
+        <img src="IMG_0576.png" alt="Honey Banana Puff" style="position:absolute; bottom:0; right:0; width:60%; opacity:0.25; filter:blur(1px);">
+        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:100px; filter:drop-shadow(0 0 30px rgba(255,200,0,0.5));">🍌</div>
       </div>
+      <div class="product-card-overlay"></div>
+      <div class="product-card-glow"></div>
+      <div class="product-card-info">
+        <span class="product-type-badge badge-indica">Indica</span>
+        <div class="product-name">Honey Banana</div>
+        <p class="product-desc">Une douceur tropicale enveloppante. Miel brûlé, banane mûre et une touche de vanille crémeuse qui fond sur le palais.</p>
+        <div class="product-flavors">
+          <span class="flavor-tag">Miel</span>
+          <span class="flavor-tag">Banane</span>
+          <span class="flavor-tag">Vanille</span>
+        </div>
+        <div class="product-price">€35.00</div>
+      </div>
+      <button class="product-card-btn">+</button>
     </div>
-    <div class="footer-col">
-      <h4>Navigation</h4>
-      <a href="#home">Accueil</a>
-      <a href="#puffs">Puffs</a>
-      <a href="#jars">Jars</a>
-      <a href="#flavors">Saveurs</a>
-      <a href="#reviews">Avis clients</a>
+
+    <!-- PUFF 2 -->
+    <div class="product-card reveal" style="transition-delay:0.2s">
+      <div style="position:relative; height:320px; overflow:hidden; background: linear-gradient(160deg, #0a1525, #1a4570, #00bfff);">
+        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:100px; filter:drop-shadow(0 0 30px rgba(0,200,255,0.5));">🫐</div>
+      </div>
+      <div class="product-card-overlay"></div>
+      <div class="product-card-glow"></div>
+      <div class="product-card-info">
+        <span class="product-type-badge badge-hybrid">Hybrid</span>
+        <div class="product-name">Acai Mints</div>
+        <p class="product-desc">La fraîcheur explosive de la menthe rencontre la profondeur acidulée de l'acaï. Un équilibre parfait entre puissance et subtilité.</p>
+        <div class="product-flavors">
+          <span class="flavor-tag">Acaï</span>
+          <span class="flavor-tag">Menthe</span>
+          <span class="flavor-tag">Baies</span>
+        </div>
+        <div class="product-price">€35.00</div>
+      </div>
+      <button class="product-card-btn">+</button>
     </div>
-    <div class="footer-col">
-      <h4>Informations</h4>
-      <a href="#">À propos</a>
-      <a href="#">Politique de confidentialité</a>
-      <a href="#">Conditions d'utilisation</a>
-      <a href="#">FAQ</a>
-      <a href="#">Livraison</a>
+
+    <!-- PUFF 3 -->
+    <div class="product-card reveal" style="transition-delay:0.3s">
+      <div style="position:relative; height:320px; overflow:hidden; background: linear-gradient(160deg, #200a35, #5a1590, #da70d6);">
+        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:100px; filter:drop-shadow(0 0 30px rgba(200,0,255,0.5));">🍬</div>
+      </div>
+      <div class="product-card-overlay"></div>
+      <div class="product-card-glow"></div>
+      <div class="product-card-info">
+        <span class="product-type-badge badge-indica">Indica</span>
+        <div class="product-name">Bubblegum Kush</div>
+        <p class="product-desc">Le classique réinventé. Chewing-gum sucré des années 90 avec une base terreuse de Kush premium pour un effet profond et enveloppant.</p>
+        <div class="product-flavors">
+          <span class="flavor-tag">Bubblegum</span>
+          <span class="flavor-tag">Sucre</span>
+          <span class="flavor-tag">Terre</span>
+        </div>
+        <div class="product-price">€35.00</div>
+      </div>
+      <button class="product-card-btn">+</button>
     </div>
-    <div class="footer-col">
-      <h4>Newsletter</h4>
-      <div class="newsletter">
-        <p>Recevez nos offres exclusives et nouveautés en avant-première.</p>
-        <div class="newsletter-form">
-          <input type="email" class="newsletter-input" placeholder="votre@email.com">
-          <button class="newsletter-submit">→</button>
+
+    <!-- PUFF 4 -->
+    <div class="product-card reveal" style="transition-delay:0.1s">
+      <div style="position:relative; height:320px; overflow:hidden; background: linear-gradient(160deg, #1a2505, #3a5510, #7fff00);">
+        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:100px; filter:drop-shadow(0 0 30px rgba(100,255,0,0.5));">🍋</div>
+      </div>
+      <div class="product-card-overlay"></div>
+      <div class="product-card-glow"></div>
+      <div class="product-card-info">
+        <span class="product-type-badge badge-sativa">Sativa</span>
+        <div class="product-name">Tropical Lemon Haze</div>
+        <p class="product-desc">Une explosion d'agrumes tropicaux sous le soleil de Californie. Citron vif, mangue sucrée et une haze légère qui éveille l'esprit.</p>
+        <div class="product-flavors">
+          <span class="flavor-tag">Citron</span>
+          <span class="flavor-tag">Mangue</span>
+          <span class="flavor-tag">Tropical</span>
+        </div>
+        <div class="product-price">€35.00</div>
+      </div>
+      <button class="product-card-btn">+</button>
+    </div>
+
+    <!-- PUFF 5 -->
+    <div class="product-card reveal" style="transition-delay:0.2s">
+      <div style="position:relative; height:320px; overflow:hidden; background: linear-gradient(160deg, #2a0010, #7a1030, #ff1060);">
+        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:100px; filter:drop-shadow(0 0 30px rgba(255,0,80,0.5));">🍓</div>
+      </div>
+      <div class="product-card-overlay"></div>
+      <div class="product-card-glow"></div>
+      <div class="product-card-info">
+        <span class="product-type-badge badge-hybrid">Hybrid</span>
+        <div class="product-name">Candy Crush</div>
+        <p class="product-desc">Pour les palais les plus gourmands. Un torrent de fraise, framboise et bonbons acidulés dans une harmonie sucrée totalement addictive.</p>
+        <div class="product-flavors">
+          <span class="flavor-tag">Fraise</span>
+          <span class="flavor-tag">Framboise</span>
+          <span class="flavor-tag">Acidulé</span>
+        </div>
+        <div class="product-price">€35.00</div>
+      </div>
+      <button class="product-card-btn">+</button>
+    </div>
+
+    <!-- PUFF 6 -->
+    <div class="product-card reveal" style="transition-delay:0.3s">
+      <div style="position:relative; height:320px; overflow:hidden; background: linear-gradient(160deg, #001a20, #004550, #00e5ff);">
+        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:100px; filter:drop-shadow(0 0 30px rgba(0,200,255,0.5));">🌊</div>
+      </div>
+      <div class="product-card-overlay"></div>
+      <div class="product-card-glow"></div>
+      <div class="product-card-info">
+        <span class="product-type-badge badge-sativa">Sativa</span>
+        <div class="product-name">Ocean Mist</div>
+        <p class="product-desc">La sérénité de l'océan Pacifique en une bouffée. Notes marines fraîches, eucalyptus et une légèreté cristalline venue des côtes californiennes.</p>
+        <div class="product-flavors">
+          <span class="flavor-tag">Marine</span>
+          <span class="flavor-tag">Eucalyptus</span>
+          <span class="flavor-tag">Frais</span>
+        </div>
+        <div class="product-price">€35.00</div>
+      </div>
+      <button class="product-card-btn">+</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- HONEY DIVIDER -->
+<div class="candy-divider"></div>
+
+<!-- JARS SECTION -->
+<section id="jars">
+  <div class="section-header reveal">
+    <div class="section-tag">Extraction Premium</div>
+    <h2 class="section-title">NOS JARS</h2>
+    <p class="section-subtitle">Des concentrés d'exception. Chaque jar est une œuvre d'art, une promesse de qualité absolue et de pureté californienne.</p>
+  </div>
+
+  <div class="jars-layout">
+
+    <!-- JAR HERO -->
+    <div class="jar-hero-card reveal">
+      <div style="height: 580px; background: linear-gradient(160deg, #0a2010, #1a4a20, #2ecc71, #7dffc4); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+        <div style="font-size:180px; filter:drop-shadow(0 0 60px rgba(46,204,113,0.7)); animation:floatOrb 4s ease-in-out infinite;">🍯</div>
+        <div style="position:absolute; bottom:0; left:0; right:0; height:200px; background: linear-gradient(to top, rgba(10,5,16,0.9), transparent);"></div>
+      </div>
+      <div class="product-card-overlay"></div>
+      <div class="jar-hero-info">
+        <span class="product-type-badge badge-indica" style="margin-bottom:16px; display:inline-block;">Indica — Live Rosin</span>
+        <div class="product-name" style="font-size:32px; margin-bottom:12px;">Golden Honey Live Rosin</div>
+        <p style="font-size:14px; color:rgba(255,255,255,0.65); line-height:1.7; margin-bottom:20px;">L'or liquide de la Californie. Ce rosin live extraction pleine fleur offre un profil terpénique d'une richesse inégalée. Texture crémeuse, couleur ambrée profonde, effets lourds et relaxants.</p>
+        <div class="product-flavors" style="margin-bottom:24px;">
+          <span class="flavor-tag">Miel Sauvage</span>
+          <span class="flavor-tag">Pin</span>
+          <span class="flavor-tag">Terre Noire</span>
+          <span class="flavor-tag">Agrumes</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:20px;">
+          <div class="product-price" style="font-size:36px;">€55.00</div>
+          <button class="btn-primary" style="padding:14px 32px; font-size:11px;">Ajouter</button>
         </div>
       </div>
     </div>
+
+    <!-- JAR SMALL 1 -->
+    <div class="jar-small-card reveal" style="transition-delay:0.15s">
+      <div style="height:100%; background: linear-gradient(160deg, #1a0530, #4a1080, #8a2be2); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+        <div style="font-size:90px; filter:drop-shadow(0 0 30px rgba(138,43,226,0.7));">💜</div>
+      </div>
+      <div class="product-card-overlay"></div>
+      <div class="product-card-info">
+        <span class="product-type-badge badge-indica">Indica</span>
+        <div class="product-name" style="font-size:20px;">Purple Velvet</div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="product-price">€50.00</div>
+          <button class="product-card-btn" style="position:static; opacity:1; transform:none; background:rgba(138,43,226,0.3); border-color:rgba(138,43,226,0.5);">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- JAR SMALL 2 -->
+    <div class="jar-small-card reveal" style="transition-delay:0.25s">
+      <div style="height:100%; background: linear-gradient(160deg, #201000, #604020, #ff8c00); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+        <div style="font-size:90px; filter:drop-shadow(0 0 30px rgba(255,140,0,0.7));">🔥</div>
+      </div>
+      <div class="product-card-overlay"></div>
+      <div class="product-card-info">
+        <span class="product-type-badge badge-sativa">Sativa</span>
+        <div class="product-name" style="font-size:20px;">Sunset Sherbet</div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="product-price">€50.00</div>
+          <button class="product-card-btn" style="position:static; opacity:1; transform:none; background:rgba(255,140,0,0.2); border-color:rgba(255,140,0,0.4);">+</button>
+        </div>
+      </div>
+    </div>
+
   </div>
+</section>
+
+<!-- SAVEURS SECTION -->
+<section id="saveurs">
+  <div class="section-header reveal">
+    <div class="section-tag">Notre Carte</div>
+    <h2 class="section-title">LES SAVEURS</h2>
+    <p class="section-subtitle">Une palette gustative infinie, inspirée des plus belles saveurs californiennes. Trouvez la vôtre.</p>
+  </div>
+
+  <div class="flavors-scroll">
+    <div class="flavor-card fc1 reveal">
+      <div class="flavor-card-bg"></div>
+      <div class="flavor-icon">🍌</div>
+      <div class="flavor-name">Honey Banana</div>
+      <div class="flavor-sub">Indica · Doux</div>
+    </div>
+    <div class="flavor-card fc2 reveal">
+      <div class="flavor-card-bg"></div>
+      <div class="flavor-icon">🫐</div>
+      <div class="flavor-name">Acai Mints</div>
+      <div class="flavor-sub">Hybrid · Frais</div>
+    </div>
+    <div class="flavor-card fc3 reveal">
+      <div class="flavor-card-bg"></div>
+      <div class="flavor-icon">🍋</div>
+      <div class="flavor-name">Lemon Haze</div>
+      <div class="flavor-sub">Sativa · Vif</div>
+    </div>
+    <div class="flavor-card fc4 reveal">
+      <div class="flavor-card-bg"></div>
+      <div class="flavor-icon">🍯</div>
+      <div class="flavor-name">Honey OG</div>
+      <div class="flavor-sub">Indica · Crémeux</div>
+    </div>
+    <div class="flavor-card fc5 reveal">
+      <div class="flavor-card-bg"></div>
+      <div class="flavor-icon">🍓</div>
+      <div class="flavor-name">Candy Crush</div>
+      <div class="flavor-sub">Hybrid · Acidulé</div>
+    </div>
+    <div class="flavor-card fc6 reveal">
+      <div class="flavor-card-bg"></div>
+      <div class="flavor-icon">🌿</div>
+      <div class="flavor-name">Mint Chill</div>
+      <div class="flavor-sub">Sativa · Glacé</div>
+    </div>
+    <div class="flavor-card fc7 reveal">
+      <div class="flavor-card-bg"></div>
+      <div class="flavor-icon">🍇</div>
+      <div class="flavor-name">Purple Velvet</div>
+      <div class="flavor-sub">Indica · Velours</div>
+    </div>
+    <div class="flavor-card fc8 reveal">
+      <div class="flavor-card-bg"></div>
+      <div class="flavor-icon">🥭</div>
+      <div class="flavor-name">Mango Tango</div>
+      <div class="flavor-sub">Sativa · Tropical</div>
+    </div>
+  </div>
+</section>
+
+<div class="candy-divider"></div>
+
+<!-- REVIEWS SECTION -->
+<section id="avis">
+  <div class="section-header reveal">
+    <div class="section-tag">Ils ont testé</div>
+    <h2 class="section-title">LA COMMUNAUTÉ PARLE</h2>
+    <p class="section-subtitle">Des milliers de clients satisfaits. Découvrez pourquoi Whole Melt Extracts est la référence premium.</p>
+  </div>
+
+  <div class="reviews-scroll">
+
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Franchement le meilleur puff que j'ai jamais eu. Le Honey Banana c'est une autre dimension, le goût est incroyable et l'effet ultra smooth. Je reviendrai toujours.</p>
+      <div class="review-author">
+        <div class="review-avatar">K</div>
+        <div>
+          <div class="review-name">Kévin M.</div>
+          <div class="review-location">Lyon, France</div>
+        </div>
+        <div class="review-verified">✓ Vérifié</div>
+      </div>
+    </div>
+
+    <div class="review-card reveal" style="transition-delay:0.1s">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Les jars sont une tuerie. J'ai commandé le Golden Honey et le Purple Velvet, les deux sont parfaits. La qualité est vraiment au niveau d'une marque californienne authentique.</p>
+      <div class="review-author">
+        <div class="review-avatar" style="background: linear-gradient(135deg, var(--violet), var(--blue));">S</div>
+        <div>
+          <div class="review-name">Sarah L.</div>
+          <div class="review-location">Paris, France</div>
+        </div>
+        <div class="review-verified">✓ Vérifié</div>
+      </div>
+    </div>
+
+    <div class="review-card reveal" style="transition-delay:0.2s">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Acai Mints c'est mon addiction. La fraîcheur est dingue, l'effet dure longtemps et le goût reste en bouche. Le packaging est super premium aussi, ça fait vraiment marque US.</p>
+      <div class="review-author">
+        <div class="review-avatar" style="background: linear-gradient(135deg, var(--blue), var(--mint));">T</div>
+        <div>
+          <div class="review-name">Thomas B.</div>
+          <div class="review-location">Bordeaux, France</div>
+        </div>
+        <div class="review-verified">✓ Vérifié</div>
+      </div>
+    </div>
+
+    <div class="review-card reveal" style="transition-delay:0.3s">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Livraison ultra rapide et packaging qui claque. Le Candy Crush m'a complètement conquise, c'est exactement la saveur dont je rêvais. Je recommande à tout mon entourage.</p>
+      <div class="review-author">
+        <div class="review-avatar" style="background: linear-gradient(135deg, #ff6eb4, #ffb347);">A</div>
+        <div>
+          <div class="review-name">Anaïs R.</div>
+          <div class="review-location">Marseille, France</div>
+        </div>
+        <div class="review-verified">✓ Vérifié</div>
+      </div>
+    </div>
+
+    <div class="review-card reveal" style="transition-delay:0.4s">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Whole Melt c'est vraiment dans une autre catégorie. Le Tropical Lemon Haze est parfait pour la journée, effet énergisant et goût citronné qui pète. La référence absolue.</p>
+      <div class="review-author">
+        <div class="review-avatar" style="background: linear-gradient(135deg, #7dffc4, #60d0ff);">M</div>
+        <div>
+          <div class="review-name">Maxime D.</div>
+          <div class="review-location">Nice, France</div>
+        </div>
+        <div class="review-verified">✓ Vérifié</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMMUNITY / INSTAGRAM -->
+<section id="community">
+  <div class="section-header reveal" style="text-align:center;">
+    <div class="section-tag" style="text-align:center;">@wholemeltextracts</div>
+    <h2 class="section-title" style="text-align:center;">LA VIBE</h2>
+    <p class="section-subtitle" style="margin:0 auto 48px;">Rejoins la famille Whole Melt. Tague-nous pour apparaître ici.</p>
+  </div>
+
+  <div class="community-grid">
+
+    <div class="community-item large reveal">
+      <div class="community-item-inner">
+        <div class="community-placeholder comm-gradient-1" style="width:100%; height:100%;">
+          <img src="IMG_0576.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0.3; filter:blur(1px);">
+        </div>
+      </div>
+      <div class="community-overlay">
+        <div class="insta-badge">
+          <div class="insta-icon">📸</div>
+          <span>@wholemelt_official</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="community-item reveal" style="transition-delay:0.1s">
+      <div class="community-item-inner">
+        <div class="community-placeholder comm-gradient-2" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:60px;">🌿</div>
+      </div>
+      <div class="community-overlay">
+        <div class="insta-badge"><div class="insta-icon">📸</div><span>@cali_vibes</span></div>
+      </div>
+    </div>
+
+    <div class="community-item reveal" style="transition-delay:0.15s">
+      <div class="community-item-inner">
+        <div class="community-placeholder comm-gradient-3" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:60px;">💨</div>
+      </div>
+      <div class="community-overlay">
+        <div class="insta-badge"><div class="insta-icon">📸</div><span>@extract.life</span></div>
+      </div>
+    </div>
+
+    <div class="community-item reveal" style="transition-delay:0.1s">
+      <div class="community-item-inner">
+        <div class="community-placeholder comm-gradient-4" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:60px;">🍯</div>
+      </div>
+      <div class="community-overlay">
+        <div class="insta-badge"><div class="insta-icon">📸</div><span>@honey.melt</span></div>
+      </div>
+    </div>
+
+    <div class="community-item reveal" style="transition-delay:0.2s">
+      <div class="community-item-inner">
+        <div class="community-placeholder comm-gradient-5" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:60px;">🌊</div>
+      </div>
+      <div class="community-overlay">
+        <div class="insta-badge"><div class="insta-icon">📸</div><span>@pacific.extracts</span></div>
+      </div>
+    </div>
+
+    <div class="community-item reveal" style="transition-delay:0.25s">
+      <div class="community-item-inner">
+        <div class="community-placeholder comm-gradient-6" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:60px;">⭐</div>
+      </div>
+      <div class="community-overlay">
+        <div class="insta-badge"><div class="insta-icon">📸</div><span>@wholemelt.fan</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="text-align:center; margin-top:48px; opacity:0; animation:fadeUp 1s ease 0.5s forwards;">
+    <button class="btn-outline" style="border-color:rgba(255,110,180,0.4); color:var(--pink);">Suivre @wholemeltextracts →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img src="IMG_0576.png" alt="Whole Melt Extracts">
+      <p class="footer-tagline">L'excellence californienne du cannabis premium. Des extractions d'une pureté inégalée, pour les connaisseurs.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn">📸</a>
+        <a href="#" class="social-btn">📱</a>
+        <a href="#" class="social-btn">🐦</a>
+        <a href="#" class="social-btn">▶</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Produits</h4>
+      <ul>
+        <li><a href="#">Puffs Premium</a></li>
+        <li><a href="#">Jars Live Rosin</a></li>
+        <li><a href="#">Collections</a></li>
+        <li><a href="#">Nouveautés</a></li>
+        <li><a href="#">Éditions Limitées</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>La Marque</h4>
+      <ul>
+        <li><a href="#">Notre Histoire</a></li>
+        <li><a href="#">California Roots</a></li>
+        <li><a href="#">Lab & Qualité</a></li>
+        <li><a href="#">Ambassadeurs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Commander</a></li>
+        <li><a href="#">Livraison</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Mentions Légales</a></li>
+      </ul>
+    </div>
+  </div>
+
   <div class="footer-bottom">
-    <span>© 2025 Whole Melt Extracts. Tous droits réservés.</span>
-    <span>🔞 Produit réservé aux adultes · +18 uniquement</span>
+    <div class="footer-copy">© 2024 Whole Melt Extracts. Tous droits réservés.</div>
+    <div class="age-badge">18+ SEULEMENT</div>
+    <div class="footer-legal">
+      <a href="#">Politique de Confidentialité</a>
+      <a href="#">CGV</a>
+      <a href="#">Cookies</a>
+    </div>
   </div>
 </footer>
 
-<!-- ════ CART DRAWER ════ -->
-<div class="cart-overlay" id="cart-overlay"></div>
-<div class="cart-drawer" id="cart-drawer">
-  <div class="cart-header">
-    <h3>🛒 Mon Panier</h3>
-    <button class="cart-close" id="cart-close-btn">✕</button>
-  </div>
-  <div class="cart-items" id="cart-items">
-    <div class="cart-empty">🍬<p>Votre panier est vide</p></div>
-  </div>
-  <div class="cart-footer">
-    <div class="cart-total">
-      <span class="cart-total-label">Total</span>
-      <span class="cart-total-price" id="cart-total">€0.00</span>
-    </div>
-    <button class="checkout-btn">Passer commande →</button>
-  </div>
+<div class="disclaimer-banner">
+  Ce site est réservé aux personnes majeures. La consommation de cannabis peut être soumise à des restrictions légales selon votre pays.
 </div>
 
-<!-- TOAST -->
-<div class="toast" id="toast">✅ Ajouté au panier !</div>
-
 <script>
-// ══════════════════════════════════════
-// DATA
-// ══════════════════════════════════════
-const flavors = [
-  {name:'Honey Banana', emoji:'🍯', class:'fc-1', type:'Indica'},
-  {name:'Bubblegum Kush', emoji:'🍬', class:'fc-2', type:'Hybrid'},
-  {name:'Acai Mints', emoji:'🫐', class:'fc-3', type:'Sativa'},
-  {name:'Tropical Lemon Haze', emoji:'🍋', class:'fc-4', type:'Sativa'},
-  {name:'Candy Crush', emoji:'🍭', class:'fc-5', type:'Hybrid'},
-  {name:'Watermelon Zkittlez', emoji:'🍉', class:'fc-6', type:'Indica'},
-  {name:'Strawberry Milkshake', emoji:'🍓', class:'fc-7', type:'Hybrid'},
-  {name:'Apple Rings', emoji:'🍏', class:'fc-8', type:'Sativa'},
-  {name:'Zour Patch', emoji:'🍋‍🟩', class:'fc-9', type:'Hybrid'},
-  {name:'Pixie Stixx', emoji:'✨', class:'fc-10', type:'Sativa'}
-];
+// CURSOR
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursorTrail');
+let mx = 0, my = 0, tx = 0, ty = 0;
 
-const descriptions = {
-  'Honey Banana':'Mélange d\'une douceur miel crémeuse avec des notes de banane mûre pour une expérience ultra gourmande et relaxante.',
-  'Bubblegum Kush':'Saveur de chewing-gum sucré avec des notes terreuses de Kush. Une vague de relaxation douce et enveloppante.',
-  'Acai Mints':'L\'intensité des baies d\'açaï mêlée à la fraîcheur mentholée. Un équilibre parfait entre douceur et fraîcheur.',
-  'Tropical Lemon Haze':'Une explosion d\'agrumes tropicaux avec la vivacité du citron. Énergisant, pétillant et absolument addictif.',
-  'Candy Crush':'Un mélange de bonbons fruités multicolores qui explose en bouche. La saveur la plus gourmande de la gamme.',
-  'Watermelon Zkittlez':'La fraîcheur juteuse de la pastèque rencontre l\'arc-en-ciel de Zkittlez. Une bombe de saveurs estivales.',
-  'Strawberry Milkshake':'La douceur crémeuse d\'un milkshake à la fraise fraîche. Onctueux, sucré et absolument irrésistible.',
-  'Apple Rings':'La saveur acidulée et sucrée des bonbons pomme de votre enfance. Nostalgique et délicieusement addictif.',
-  'Zour Patch':'Un choc acidulé qui laisse place à une douceur envoûtante. Pour les amateurs de sensations fortes.',
-  'Pixie Stixx':'La magie des bonbons poudre multicolores. Une explosion de saveurs sucrées et acidulées en une seule bouffée.'
-};
-
-const badges = {'Indica':'badge-indica','Hybrid':'badge-hybrid','Sativa':'badge-sativa'};
-
-const puffsData = [
-  {flavor:'Honey Banana', type:'Indica', price:39.99, emoji:'💨'},
-  {flavor:'Bubblegum Kush', type:'Hybrid', price:39.99, emoji:'💨'},
-  {flavor:'Acai Mints', type:'Sativa', price:42.99, emoji:'💨'},
-  {flavor:'Tropical Lemon Haze', type:'Sativa', price:39.99, emoji:'💨'},
-  {flavor:'Candy Crush', type:'Hybrid', price:44.99, emoji:'💨'},
-  {flavor:'Watermelon Zkittlez', type:'Indica', price:39.99, emoji:'💨'},
-];
-
-const jarsData = [
-  {flavor:'Strawberry Milkshake', type:'Hybrid', price:54.99, emoji:'🫙'},
-  {flavor:'Apple Rings', type:'Sativa', price:49.99, emoji:'🫙'},
-  {flavor:'Zour Patch', type:'Hybrid', price:54.99, emoji:'🫙'},
-  {flavor:'Pixie Stixx', type:'Sativa', price:59.99, emoji:'🫙'},
-  {flavor:'Honey Banana', type:'Indica', price:54.99, emoji:'🫙'},
-  {flavor:'Candy Crush', type:'Hybrid', price:59.99, emoji:'🫙'},
-];
-
-const reviewsData = [
-  {text:'La qualité est incomparable. Le Honey Banana est une véritable œuvre d\'art. Je suis client depuis 6 mois et je ne changerai pour rien au monde.',stars:5,name:'Alex M.',loc:'Paris, France'},
-  {text:'Le Candy Crush Puff est juste incroyable. L\'emballage est luxueux, la saveur est exactement comme décrite. Livraison ultra rapide !',stars:5,name:'Léa D.',loc:'Lyon, France'},
-  {text:'Mon jar Strawberry Milkshake est arrivé parfaitement. La texture est soyeuse, la saveur est à couper le souffle. 10/10.',stars:5,name:'Noah B.',loc:'Marseille, France'},
-  {text:'Qualité premium, saveurs authentiques. Le Acai Mints est devenu mon incontournable. Toute ma squad est convertie !',stars:5,name:'Emma R.',loc:'Bordeaux, France'},
-  {text:'J\'étais sceptique au début mais après la première commande je comprends le hype. Whole Melt c\'est vraiment dans une autre catégorie.',stars:5,name:'Thomas L.',loc:'Lille, France'},
-  {text:'Le Watermelon Zkittlez jar est simplement divin. Saveur parfaite, effet top. La meilleure marque sur le marché sans hésitation.',stars:5,name:'Sofia P.',loc:'Nice, France'},
-  {text:'Pixie Stixx = coup de cœur absolu. L\'emballage candy est trop stylé et la qualité est au rendez-vous. Je recommande à 1000% !',stars:5,name:'Camille V.',loc:'Strasbourg, France'},
-  {text:'Service client au top, livraison discrète et rapide. Le Zour Patch jar est incroyable, le rush acidulé est une claque.',stars:5,name:'Lucas F.',loc:'Toulouse, France'},
-];
-
-const socialPosts = ['🍯','💨','🍬','🍉','🌸','✨','🍋','🫐','🍭','🍓','🍏','🌿'];
-
-// ══════════════════════════════════════
-// RENDER FUNCTIONS
-// ══════════════════════════════════════
-function createCard(p, cat) {
-  const div = document.createElement('div');
-  div.className = 'product-card';
-  const bg = cat === 'puffs'
-    ? 'linear-gradient(135deg,rgba(255,110,180,.15),rgba(124,58,237,.1))'
-    : 'linear-gradient(135deg,rgba(245,158,11,.12),rgba(255,110,180,.1))';
-  div.innerHTML = `
-    <div class="card-img" style="background:${bg};">
-      <span style="font-size:4.5rem;filter:drop-shadow(0 0 20px rgba(255,110,180,.5));">${p.emoji}</span>
-      <div class="card-img-glow" style="background:radial-gradient(circle at center,rgba(255,110,180,.15),transparent 70%);"></div>
-      <span class="card-badge ${badges[p.type]}">${p.type}</span>
-    </div>
-    <div class="card-body">
-      <div class="card-type">${cat === 'puffs' ? '💨 Puff Premium' : '🫙 Jar Concentré'}</div>
-      <div class="card-name">${p.flavor}</div>
-      <div class="card-flavor">Saveur · ${p.flavor}</div>
-      <div class="card-desc">${descriptions[p.flavor]}</div>
-      <div class="card-footer">
-        <div class="card-price">
-          <small>À partir de</small>
-          €${p.price.toFixed(2)}
-        </div>
-        <button class="add-cart-btn" onclick="addToCart('${p.flavor}','${cat}',${p.price},'${p.emoji}')">+ Panier</button>
-      </div>
-    </div>`;
-  return div;
-}
-
-function renderProducts() {
-  const pg = document.getElementById('puffs-grid');
-  const jg = document.getElementById('jars-grid');
-  puffsData.forEach(p => pg.appendChild(createCard(p,'puffs')));
-  jarsData.forEach(p => jg.appendChild(createCard(p,'jars')));
-}
-
-function renderFlavors() {
-  const grid = document.getElementById('flavors-grid');
-  flavors.forEach(f => {
-    const d = document.createElement('div');
-    d.className = `flavor-card ${f.class} reveal`;
-    d.innerHTML = `<span class="flavor-emoji">${f.emoji}</span>
-    <div class="flavor-name">${f.name}</div>
-    <div class="flavor-type">${f.type}</div>`;
-    grid.appendChild(d);
-  });
-}
-
-function renderReviews() {
-  const ticker = document.getElementById('reviews-ticker');
-  const doubled = [...reviewsData, ...reviewsData];
-  doubled.forEach(r => {
-    const d = document.createElement('div');
-    d.className = 'review-card';
-    d.innerHTML = `
-      <div class="review-stars">${'★'.repeat(r.stars)}</div>
-      <div class="review-text">"${r.text}"</div>
-      <div class="reviewer">
-        <div class="reviewer-avatar">${r.name[0]}</div>
-        <div>
-          <div class="reviewer-name">${r.name}</div>
-          <div class="reviewer-location">${r.loc}</div>
-        </div>
-      </div>`;
-    ticker.appendChild(d);
-  });
-}
-
-function renderSocial() {
-  const grid = document.getElementById('social-grid');
-  socialPosts.forEach(p => {
-    const d = document.createElement('div');
-    d.className = 'social-post';
-    d.innerHTML = `${p}<div class="social-post-overlay"><span>Voir sur Instagram →</span></div>`;
-    grid.appendChild(d);
-  });
-}
-
-// ══════════════════════════════════════
-// CART
-// ══════════════════════════════════════
-let cart = [];
-
-function addToCart(flavor, type, price, emoji) {
-  const existing = cart.find(i => i.flavor === flavor && i.type === type);
-  if (existing) { existing.qty++; }
-  else { cart.push({flavor, type, price, emoji, qty:1, id: Date.now()}); }
-  updateCart();
-  showToast(`${emoji} ${flavor} ajouté !`);
-}
-
-function removeFromCart(id) {
-  cart = cart.filter(i => i.id !== id);
-  updateCart();
-}
-
-function updateCart() {
-  const count = cart.reduce((s,i) => s+i.qty, 0);
-  document.getElementById('cart-count').textContent = count;
-  const total = cart.reduce((s,i) => s+i.price*i.qty, 0);
-  document.getElementById('cart-total').textContent = `€${total.toFixed(2)}`;
-
-  const itemsEl = document.getElementById('cart-items');
-  if (cart.length === 0) {
-    itemsEl.innerHTML = '<div class="cart-empty">🍬<p>Votre panier est vide</p></div>';
-    return;
-  }
-  itemsEl.innerHTML = cart.map(i => `
-    <div class="cart-item">
-      <div class="cart-item-icon">${i.emoji}</div>
-      <div class="cart-item-info">
-        <div class="cart-item-name">${i.flavor}</div>
-        <div class="cart-item-flavor">${i.type} · x${i.qty}</div>
-      </div>
-      <div class="cart-item-price">€${(i.price*i.qty).toFixed(2)}</div>
-      <button class="cart-item-remove" onclick="removeFromCart(${i.id})">✕</button>
-    </div>`).join('');
-}
-
-function openCart() {
-  document.getElementById('cart-overlay').classList.add('open');
-  document.getElementById('cart-drawer').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeCart() {
-  document.getElementById('cart-overlay').classList.remove('open');
-  document.getElementById('cart-drawer').classList.remove('open');
-  document.body.style.overflow='';
-}
-
-document.getElementById('cart-open-btn').addEventListener('click', openCart);
-document.getElementById('cart-close-btn').addEventListener('click', closeCart);
-document.getElementById('cart-overlay').addEventListener('click', closeCart);
-
-// ══════════════════════════════════════
-// TOAST
-// ══════════════════════════════════════
-let toastTimer;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
-}
-
-// ══════════════════════════════════════
-// HEADER SCROLL
-// ══════════════════════════════════════
-window.addEventListener('scroll', () => {
-  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx - 6 + 'px';
+  cursor.style.top = my - 6 + 'px';
 });
 
-// ══════════════════════════════════════
-// MOBILE MENU
-// ══════════════════════════════════════
-const ham = document.getElementById('hamburger');
-const mob = document.getElementById('mobile-menu');
-ham.addEventListener('click', () => {
-  ham.classList.toggle('active');
-  mob.classList.toggle('open');
-  document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
-});
-function closeMobile() { ham.classList.remove('active'); mob.classList.remove('open'); document.body.style.overflow=''; }
-
-// ══════════════════════════════════════
-// CUSTOM CURSOR
-// ══════════════════════════════════════
-const cur = document.getElementById('cursor');
-const trail = document.getElementById('cursor-trail');
-let mx=0,my=0,tx=0,ty=0;
-document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
-(function animTrail(){
-  tx += (mx-tx)*.12; ty += (my-ty)*.12;
-  trail.style.left=tx+'px'; trail.style.top=ty+'px';
+function animTrail() {
+  tx += (mx - tx) * 0.18;
+  ty += (my - ty) * 0.18;
+  trail.style.left = tx - 18 + 'px';
+  trail.style.top = ty - 18 + 'px';
   requestAnimationFrame(animTrail);
-})();
+}
+animTrail();
 
-// ══════════════════════════════════════
-// PARTICLES
-// ══════════════════════════════════════
-(function initParticles(){
-  const canvas = document.getElementById('particles-canvas');
-  const ctx = canvas.getContext('2d');
-  let W,H,particles=[];
-  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
-  resize();
-  window.addEventListener('resize',resize);
-  const colors=['#ff6eb4','#9b59b6','#f59e0b','#3b82f6','#39ff14'];
-  for(let i=0;i<80;i++){
-    particles.push({
-      x:Math.random()*W,y:Math.random()*H,
-      vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,
-      r:Math.random()*2+.5,
-      color:colors[Math.floor(Math.random()*colors.length)],
-      alpha:Math.random()*.6+.2
-    });
-  }
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    particles.forEach(p=>{
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=p.color;ctx.globalAlpha=p.alpha;ctx.fill();
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
-      if(p.y<0)p.y=H;if(p.y>H)p.y=0;
-    });
-    ctx.globalAlpha=1;
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
+document.querySelectorAll('a, button, .product-card, .flavor-card, .review-card, .community-item').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'scale(2.5)';
+    trail.style.transform = 'scale(1.5)';
+    trail.style.borderColor = 'var(--pink)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'scale(1)';
+    trail.style.transform = 'scale(1)';
+    trail.style.borderColor = 'var(--violet)';
+  });
+});
 
-// ══════════════════════════════════════
+// INTRO VIDEO
+const intro = document.getElementById('intro-overlay');
+const video = document.getElementById('intro-video');
+
+function skipIntro() {
+  intro.classList.add('fade-out');
+  setTimeout(() => { intro.style.display = 'none'; }, 1200);
+}
+
+video.addEventListener('ended', skipIntro);
+
+// Fallback if video fails to load
+video.addEventListener('error', skipIntro);
+setTimeout(() => {
+  if (intro.style.display !== 'none' && !intro.classList.contains('fade-out')) {
+    skipIntro();
+  }
+}, 8000);
+
+// ANIMATED CANVAS BG
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const orbs = Array.from({length: 8}, (_, i) => ({
+  x: Math.random() * window.innerWidth,
+  y: Math.random() * window.innerHeight,
+  r: 200 + Math.random() * 300,
+  vx: (Math.random() - 0.5) * 0.4,
+  vy: (Math.random() - 0.5) * 0.4,
+  hue: [300, 260, 200, 160, 340, 280, 220, 40][i],
+  opacity: 0.06 + Math.random() * 0.08
+}));
+
+function drawBg() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  orbs.forEach(o => {
+    o.x += o.vx; o.y += o.vy;
+    if (o.x < -o.r) o.x = canvas.width + o.r;
+    if (o.x > canvas.width + o.r) o.x = -o.r;
+    if (o.y < -o.r) o.y = canvas.height + o.r;
+    if (o.y > canvas.height + o.r) o.y = -o.r;
+
+    const grad = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+    grad.addColorStop(0, `hsla(${o.hue}, 90%, 60%, ${o.opacity})`);
+    grad.addColorStop(1, 'hsla(0,0%,0%,0)');
+    ctx.beginPath();
+    ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+  });
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+
 // SCROLL REVEAL
-// ══════════════════════════════════════
-const revealObserver = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('visible');} });
-},{threshold:.1});
-
-function observeReveals(){
-  document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
-}
-
-// ══════════════════════════════════════
-// COUNT UP ANIMATION
-// ══════════════════════════════════════
-function animateCount(el, target) {
-  let current = 0;
-  const step = target / 80;
-  const timer = setInterval(() => {
-    current += step;
-    if (current >= target) { current = target; clearInterval(timer); }
-    el.textContent = target >= 1000 ? Math.floor(current).toLocaleString('fr-FR') + '+' : Math.floor(current) + (el.dataset.count == 98 ? '%' : '+');
-  }, 20);
-}
-
-const statsObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
     if (e.isIntersecting) {
-      document.querySelectorAll('.stat-num').forEach(el => animateCount(el, +el.dataset.count));
-      statsObserver.disconnect();
+      setTimeout(() => e.target.classList.add('visible'), (i % 4) * 80);
+      observer.unobserve(e.target);
     }
   });
-}, {threshold:.5});
-statsObserver.observe(document.getElementById('stats'));
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
-// ══════════════════════════════════════
-// PARALLAX MOUSE (hero)
-// ══════════════════════════════════════
-document.addEventListener('mousemove', e=>{
-  const x=(e.clientX/window.innerWidth-.5)*20;
-  const y=(e.clientY/window.innerHeight-.5)*20;
-  document.querySelectorAll('.floater').forEach((f,i)=>{
-    const d=(i+1)*.4;
-    f.style.transform=`translateY(${Math.sin(Date.now()/1000+i)*20}px) translate(${x*d}px,${y*d}px) rotate(${x*.5}deg)`;
+reveals.forEach(el => observer.observe(el));
+
+// 3D TILT on product cards
+document.querySelectorAll('.product-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `translateY(-12px) scale(1.02) rotateY(${x * 8}deg) rotateX(${-y * 6}deg)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
   });
 });
 
-// ══════════════════════════════════════
-// INTRO VIDEO
-// ══════════════════════════════════════
-const intro = document.getElementById('intro');
-const introVideo = document.getElementById('intro-video');
-const skipBtn = document.getElementById('skip-btn');
+// SMOOTH SCROLL for nav
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
 
-function endIntro(){
-  intro.classList.add('intro-hidden');
-  document.body.style.overflow='';
-  setTimeout(()=>{intro.style.display='none';},900);
-}
-
-introVideo.addEventListener('ended', endIntro);
-skipBtn.addEventListener('click', endIntro);
-document.body.style.overflow='hidden';
-
-// Fallback: if video fails to load, skip after 5s
-setTimeout(()=>{ if(intro.style.display!=='none') endIntro(); }, 8000);
-
-// ══════════════════════════════════════
-// GSAP ANIMATIONS (if available)
-// ══════════════════════════════════════
-window.addEventListener('load', () => {
-  if(window.gsap && window.ScrollTrigger) {
-    gsap.registerPlugin(ScrollTrigger);
-
-    // hero entrance
-    gsap.from('.hero-badge',{opacity:0,y:30,duration:1,delay:.3,ease:'power3.out'});
-    gsap.from('.hero-title .line1',{opacity:0,y:50,duration:1,delay:.5,ease:'power3.out'});
-    gsap.from('.hero-title .line2',{opacity:0,y:50,duration:1,delay:.7,ease:'power3.out'});
-    gsap.from('.hero-sub',{opacity:0,y:30,duration:1,delay:.9,ease:'power3.out'});
-    gsap.from('.hero-btns',{opacity:0,y:30,duration:1,delay:1.1,ease:'power3.out'});
-
-    // product cards stagger
-    ['#puffs-grid .product-card','#jars-grid .product-card'].forEach(sel=>{
-      gsap.from(sel,{
-        opacity:0,y:60,stagger:.1,duration:.8,ease:'power3.out',
-        scrollTrigger:{trigger:sel,start:'top 80%'}
-      });
-    });
+// NAV SCROLL EFFECT
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 80) {
+    nav.style.background = 'rgba(10,5,16,0.95)';
+    nav.style.backdropFilter = 'blur(20px)';
+    nav.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
+  } else {
+    nav.style.background = 'linear-gradient(to bottom, rgba(10,5,16,0.9), transparent)';
+    nav.style.backdropFilter = 'blur(2px)';
+    nav.style.borderBottom = 'none';
   }
+});
 
-  renderProducts();
-  renderFlavors();
-  renderReviews();
-  renderSocial();
-  observeReveals();
+// PARALLAX HERO
+window.addEventListener('scroll', () => {
+  const hero = document.getElementById('hero');
+  const scrolled = window.scrollY;
+  if (hero) {
+    const content = hero.querySelector('.hero-content');
+    if (content) content.style.transform = `translateY(${scrolled * 0.3}px)`;
+  }
 });
 </script>
 </body>
